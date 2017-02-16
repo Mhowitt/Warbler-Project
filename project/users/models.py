@@ -2,7 +2,7 @@ from project import db, bcrypt
 from flask_login import UserMixin
 
 
-FollowersFollowees = db.Table('follows',
+FollowersFollowee = db.Table('follows',
                               db.Column('id',
                                         db.Integer,
                                         primary_key=True),
@@ -24,6 +24,12 @@ class User(db.Model, UserMixin):
   image_url = db.Column(db.Text)
   password = db.Column(db.Text)
   messages = db.relationship('Message', backref='user', lazy='dynamic')
+  followers = db.relationship("User",
+                              secondary=FollowersFollowee,
+                              primaryjoin=(FollowersFollowee.c.follower_id == id),
+                              secondaryjoin=(FollowersFollowee.c.followee_id == id),
+                              backref=db.backref('followed', lazy='dynamic'),
+                              lazy='dynamic')
 
   def __init__(self, email, username, password, image_url='https://pbs.twimg.com/profile_images/524943875543420928/-0QwXz_i.jpeg'):
     self.email = email
