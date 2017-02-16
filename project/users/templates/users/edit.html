@@ -34,6 +34,17 @@
       {% endfor %}
     {% endif %}
   </div>
+  <br>
+  <div>
+    {{ form.password(placeholder="Enter your password to confirm") }}
+    {% if form.password.errors %}
+      {% for error in form.password.errors %}
+        <span>
+          {{ error }}
+        </span>
+      {% endfor %}
+    {% endif %}
+  </div>
   <button type="submit">Edit this user!</button>
 </form>
 <a href="{{ url_for('users.show', id=user.id) }}">Go Back</a>

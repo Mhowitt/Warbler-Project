@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form action="{{ url_for('users.index') }}" method="POST">
+<form action="{{ url_for('users.signup') }}" method="POST">
   {{ form.csrf_token }}
   <div>
     {{ form.email(placeholder="What's your email?") }}
@@ -28,6 +28,16 @@
     {{ form.image_url(placeholder="Optional: What image do you want to use?") }}
     {% if form.image_url.errors %}
       {% for error in form.image_url.errors %}
+        <span>
+          {{ error }}
+        </span>
+      {% endfor %}
+    {% endif %}
+  </div>
+  <div>
+    {{ form.password(placeholder="Enter your password (minimum 6 characters)") }}
+    {% if form.password.errors %}
+      {% for error in form.password.errors %}
         <span>
           {{ error }}
         </span>

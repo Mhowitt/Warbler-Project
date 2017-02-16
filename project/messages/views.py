@@ -1,7 +1,9 @@
 from flask import redirect, render_template, request, url_for, Blueprint 
 from project.messages.models import Message
-from project.users.models import User 
+from project.users.models import User
+from project.users.views import ensure_correct_user
 from project.messages.forms import MessageForm
+from flask_login import current_user, login_required
 from project import db
 
 messages_blueprint = Blueprint(
@@ -12,7 +14,7 @@ messages_blueprint = Blueprint(
 
 @messages_blueprint.route('/', methods=["GET", "POST"])
 def index(id):
-  if request.method == "POST":
+  if request.method == "POST" and current_user.get_id() == str(id):
     form = MessageForm()
     if form.validate():
       new_message = Message(
@@ -27,13 +29,15 @@ def index(id):
   return render_template('messages/index.html', messages=user.messages, user=user)
 
 @messages_blueprint.route('/new')
+@login_required
+@ensure_correct_user
 def new(id):
   return render_template('messages/new.html', form=MessageForm(), user_id=id)
 
 @messages_blueprint.route('/<int:message_id>', methods =["GET", "DELETE"])
 def show(id, message_id):
   found_message = Message.query.get(message_id)
-  if request.method == b"DELETE":
+  if request.method == b"DELETE" and current_user.get_id() == id:
     db.session.delete(found_message)
     db.session.commit()
     return redirect(url_for('messages.index', id=id))

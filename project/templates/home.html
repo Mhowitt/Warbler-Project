@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Welcome to Warbler!</h1>
+
+{% if current_user.is_authenticated %}
+  <h3>Recent Messages</h3>
+  <ul>
+    {% for message in messages %}
+      <li>{{ message.text }} - <a href="{{ url_for('users.show', id=message.user.id) }}">{{ message.user.username }}</a></li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock %}
