@@ -10,7 +10,7 @@ class Message(db.Model):
   timestamp = db.Column(db.DateTime)
   user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
 
-  def __init__(self, text, user_id,timestamp=datetime.utcnow()):
+  def __init__(self, text, user_id, timestamp=datetime.utcnow()):
     self.text = text
     self.user_id = user_id
     self.timestamp = timestamp

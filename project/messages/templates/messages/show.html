@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Here is message #{{ message.id }} for {{ message.user.username }}!</h1>
+<p>
+  {{ message.text }}
+</p>
+<form method="POST" action="{{url_for('messages.show', message_id=message.id, id=message.user.id)}}?_method=DELETE">
+  <input type="submit" value="Delete">
+</form>
+{% endblock %}
