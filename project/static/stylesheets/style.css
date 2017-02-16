@@ -2,6 +2,7 @@
   display: inline-block;
   margin-bottom: 2px;
   width: 20px;
+  border-radius: 2px;
 }
 
 .nav > li > a > img {
@@ -15,4 +16,27 @@
 
 .form-control {
   margin-bottom: 20px;
+}
+
+#profile-image {
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto 15px;
+  width: 100%;
+}
+
+.timeline-image {
+  border-radius: 5px;
+  height: 48px;
+  width: 48px;
+  margin-top: -5px;
+}
+
+.message-area,
+.timeline-image {
+  display: inline-block;
+}
+
+.message-area {
+  margin-left: 5px;
 }
