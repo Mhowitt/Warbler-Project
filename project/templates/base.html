@@ -27,6 +27,14 @@
         </a>
       </div>
       <ul class="nav navbar-nav navbar-right">
+        <li>
+          <form class="navbar-form navbar-right" action={{url_for('users.index')}} method='GET'>
+            <div class="form-group">
+              <input type="text" name="q" class="form-control" placeholder="Search Warbler">
+            </div>
+            <button type="submit" class="glyphicon glyphicon-search"></button>
+          </form>
+        </li>
         {% if current_user.is_anonymous %}
           <li><a href="{{ url_for('users.signup') }}">Sign up</a></li>
           <li><a href="{{ url_for('users.login') }}">Log in</a></li>

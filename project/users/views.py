@@ -21,6 +21,16 @@ def ensure_correct_user(fn):
         return fn(*args, **kwargs)
     return wrapper
 
+@users_blueprint.route('/', methods=["GET"])
+def index():
+  search = request.args.get('q')
+  users = None
+  if search is None or search == '':
+    users = User.query.all()
+  else:
+    users = User.query.filter(User.username.like("%%%s%%" % search)).all()
+  return render_template('users/index.html', users=users )
+
 @users_blueprint.route('/signup', methods=["GET", "POST"])
 def signup():
   form = UserForm()
