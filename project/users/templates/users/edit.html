@@ -5,45 +5,45 @@
 <form action="{{ url_for('users.show', id=user.id) }}?_method=PATCH" method="POST">
   {{ form.csrf_token }}
   <div>
-    {{ form.email(placeholder="What's your email?", value=user.email) }}
     {% if form.email.errors %}
       {% for error in form.email.errors %}
-        <span>
+        <span class="text-danger">
           {{ error }}
         </span>
       {% endfor %}
     {% endif %}
+    {{ form.email(placeholder="What's your email?", value=user.email) }}
   </div>
   <div>
-    {{ form.username(placeholder="What do you want your username to be?", value=user.username) }}
     {% if form.username.errors %}
       {% for error in form.username.errors %}
-        <span>
+        <span class="text-danger">
           {{ error }}
         </span>
       {% endfor %}
     {% endif %}
+    {{ form.username(placeholder="What do you want your username to be?", value=user.username) }}
   </div>
   <div>
-    {{ form.image_url(placeholder="Optional: What image do you want to use?", value=user.image_url) }}
     {% if form.image_url.errors %}
       {% for error in form.image_url.errors %}
-        <span>
+        <span class="text-danger">
           {{ error }}
         </span>
       {% endfor %}
     {% endif %}
+    {{ form.image_url(placeholder="Optional: What image do you want to use?", value=user.image_url) }}
   </div>
   <br>
   <div>
-    {{ form.password(placeholder="Enter your password to confirm") }}
     {% if form.password.errors %}
       {% for error in form.password.errors %}
-        <span>
+        <span class="text-danger">
           {{ error }}
         </span>
       {% endfor %}
     {% endif %}
+    {{ form.password(placeholder="Enter your password to confirm") }}
   </div>
   <button type="submit">Edit this user!</button>
 </form>

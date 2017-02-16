@@ -16,7 +16,7 @@ def ensure_correct_user(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
         if kwargs.get('id') != current_user.id:
-            flash("Not Authorized")
+            flash({'text': "Not Authorized", 'status': 'danger'})
             return redirect(url_for('root'))
         return fn(*args, **kwargs)
     return wrapper
@@ -38,7 +38,7 @@ def signup():
         db.session.commit()
         login_user(new_user)
       except IntegrityError as e:
-        flash("Username already taken")
+        flash({'text': "Username already taken", 'status': 'danger'})
         return render_template('users/signup.html', form=form)
       return redirect(url_for('root'))
   return render_template('users/signup.html', form=form)
@@ -53,9 +53,9 @@ def login():
         is_authenticated = bcrypt.check_password_hash(found_user.password, form.password.data)
         if is_authenticated:
           login_user(found_user)
-          flash("Hello, {}!".format(found_user.username))
+          flash({'text': "Hello, {}!".format(found_user.username), 'status': 'success'})
           return redirect(url_for('root'))
-      flash("Invalid credentials.")
+      flash({'text': "Invalid credentials.", 'status': 'danger'})
       return render_template('users/login.html', form=form)
   return render_template('users/login.html', form=form)
 
@@ -63,7 +63,7 @@ def login():
 @login_required
 def logout():
   logout_user()
-  flash("See you next time! You have successfully logged out.")
+  flash({ 'text': "You have successfully logged out.", 'status': 'success' })
   return redirect(url_for('users.login'))
 
 @users_blueprint.route('/<int:id>/edit')
@@ -92,7 +92,7 @@ def show(id):
         db.session.add(found_user)
         db.session.commit()
         return redirect(url_for('users.show', id=id))
-      flash("Wrong password, please try again.")
+      flash({ 'text': "Wrong password, please try again.", 'status': 'danger'})
     return render_template('users/edit.html', form=form, user=found_user)
   if request.method == b"DELETE":
     db.session.delete(found_user)

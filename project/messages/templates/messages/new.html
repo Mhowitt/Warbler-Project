@@ -5,14 +5,14 @@
 <form action="{{ url_for('messages.index', id=user_id) }}" method="POST">
   {{ form.csrf_token }}
   <div>
-    {{ form.text(placeholder="What's your message?") }}
     {% if form.text.errors %}
       {% for error in form.text.errors %}
-        <span>
+        <span class="text-danger">
           {{ error }}
         </span>
       {% endfor %}
     {% endif %}
+    {{ form.text(placeholder="What's your message?") }}
   </div>
   <button type="submit">Add my message!</button>
 </form>
