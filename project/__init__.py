@@ -9,6 +9,7 @@ modus = Modus(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI') or 'postgres://localhost/warbler-db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or "it's a secret"
 
 db = SQLAlchemy(app)
 
