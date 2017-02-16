@@ -15,9 +15,30 @@
       src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
       integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
       crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
 </head>
 <body>
   <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a href="{{ url_for('root') }}" class="navbar-brand">
+          <img src="{{ url_for('static', filename='images/warbler-logo.png') }}" alt="">
+          <span>Warbler</span>
+        </a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        {% if current_user.is_anonymous %}
+          <li><a href="{{ url_for('users.signup') }}">Sign up</a></li>
+          <li><a href="{{ url_for('users.login') }}">Log in</a></li>
+        {% else %}
+          <li><a href="{{ url_for('users.show', id=current_user.id) }}">
+            <img src="{{ current_user.image_url }}" alt="{{ current_user.username }}">
+          </a></li>
+          <li><a href="{{ url_for('messages.new', id=current_user.id) }}">New Message</a></li>
+          <li><a href="{{ url_for('users.logout') }}">Log out</a></li>
+        {% endif %}
+      </ul>
+    </div>
   </nav>
   <div class="container">
 
@@ -25,12 +46,6 @@
       <p>{{ message }}</p>
     {% endfor %}
 
-    {% if current_user.is_anonymous %}
-      <a href="{{ url_for('users.signup') }}">Sign up</a> or <a href="{{ url_for('users.login') }}">Log In</a>
-    {% else %}
-      <a href="{{ url_for('users.show', id=current_user.id) }}">My Profile</a>
-      <a href="{{ url_for('users.logout') }}">Log out</a>
-    {% endif %}
     {% block content %}
     {% endblock %}
   </div>
