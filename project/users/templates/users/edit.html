@@ -36,5 +36,5 @@
   </div>
   <button type="submit">Edit this user!</button>
 </form>
-
+<a href="{{ url_for('users.show', id=user.id) }}">Go Back</a>
 {% endblock %}

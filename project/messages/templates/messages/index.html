@@ -7,5 +7,6 @@
     <a href="{{ url_for('messages.show', id=user.id, message_id=message.id) }}">{{ message.text }}</a>
   </p>
 {% endfor %}
-
+<a href="{{ url_for('messages.new', id=user.id) }}">New Message</a>
+<a href="{{ url_for('users.index') }}">Go home</a>
 {% endblock %}
