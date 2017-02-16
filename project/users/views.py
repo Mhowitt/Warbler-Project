@@ -72,6 +72,11 @@ def logout():
 def edit(id):
   return render_template('users/edit.html', form=UserForm(), user=User.query.get(id))
 
+@users_blueprint.route('/<int:follower_id>/follower', methods=['POST'])
+@login_required
+def follower(follower_id):
+  return redirect('https://www.google.com')
+
 @users_blueprint.route('/<int:id>', methods =["GET", "PATCH", "DELETE"])
 def show(id):
   found_user = User.query.get(id)

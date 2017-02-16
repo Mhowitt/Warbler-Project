@@ -13,5 +13,12 @@
       </form>
     </li>
     <li><a href="{{ url_for('root') }}">Go Back</a></li>
+    {% if current_user.is_authenticated and current_user.id != user.id%}
+    <li>
+      <form action="{{url_for('users.follower', follower_id=user.id)}}" method="POST">
+        <button type="submit" class="btn btn-primary">Follow</button>
+      </form>
+    </li>
+    {% endif %}
   </ul>
 {% endblock %}
