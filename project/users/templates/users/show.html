@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Info on User #{{ user.id }}</h1>
+  <ul>
+    <li>{{ user.username }}</li>
+    <li>{{ user.email }}</li>
+    <li><img src="{{ user.image_url }}" alt="Image for {{ user.username }}"></li>
+    <li><a href="{{ url_for('users.edit', id=user.id) }}">Edit</a></li>
+    <li>
+      <form method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE">
+        <input type="submit" value="Delete">
+      </form>
+    </li>
+  </ul>
+{% endblock %}
