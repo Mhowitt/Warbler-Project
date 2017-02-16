@@ -1,6 +1,19 @@
 from project import db, bcrypt
 from flask_login import UserMixin
 
+
+FollowersFollowees = db.Table('follows',
+                              db.Column('id',
+                                        db.Integer,
+                                        primary_key=True),
+                              db.Column('followee_id',
+                                        db.Integer,
+                                        db.ForeignKey('users.id', ondelete="cascade")),
+                              db.Column('follower_id',
+                                        db.Integer,
+                                        db.ForeignKey('users.id', ondelete="cascade")),
+                              db.CheckConstraint('follower_id != followee_id', name="no_self_follow"))
+
 class User(db.Model, UserMixin):
 
   __tablename__ = 'users'
