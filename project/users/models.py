@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
                               secondary=FollowersFollowee,
                               primaryjoin=(FollowersFollowee.c.follower_id == id),
                               secondaryjoin=(FollowersFollowee.c.followee_id == id),
-                              backref=db.backref('followed', lazy='dynamic'),
+                              backref=db.backref('following', lazy='dynamic'),
                               lazy='dynamic')
 
   def __init__(self, email, username, password, image_url='https://pbs.twimg.com/profile_images/524943875543420928/-0QwXz_i.jpeg'):
