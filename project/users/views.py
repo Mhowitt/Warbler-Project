@@ -92,13 +92,17 @@ def follower(follower_id):
     current_user.following.remove(followed)
   db.session.add(current_user)
   db.session.commit()
-  return redirect(url_for('users.following'))
+  return redirect(url_for('users.following', id=current_user.id))
 
-@users_blueprint.route('/following', methods=['GET'])
+@users_blueprint.route('/<int:id>/following', methods=['GET'])
 @login_required
-def following():
-  following = current_user.following
-  return render_template('users/following.html', following=following)
+def following(id):
+  return render_template('users/following.html', user=User.query.get(id))
+
+@users_blueprint.route('/<int:id>/followers', methods=['GET'])
+@login_required
+def followers(id):
+  return render_template('users/followers.html', user=User.query.get(id))  
 
 @users_blueprint.route('/<int:id>', methods =["GET", "PATCH", "DELETE"])
 def show(id):

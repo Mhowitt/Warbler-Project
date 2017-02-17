@@ -42,23 +42,35 @@
       </ul>    
     </div>
   </div>
-  <div class="row">
+  <div class="row user-cards">
     <div class="col-sm-3">
       <h4 id="sidebar-username">@{{ user.username }}</h4>
     </div>
-    <div class="col-sm-6">
-      <ul class="list-group" id="user-messages">
-        {% for message in user.messages.order_by('timestamp desc') %}
-          <li class="list-group-item">
-            <a href="{{ url_for('users.show', id=user.id) }}"><img src="{{ user.image_url }}" alt="" class="timeline-image"></a>
-            <div class="message-area">
-              <a href="{{ url_for('users.show', id=user.id) }}">@{{ user.username }}</a>
-              <span class="text-muted">{{ message.timestamp.strftime('%d %B %Y') }}</span>
-              <p>{{ message.text }}</p>
+    <div class="col-sm-9">
+      <div class="row">
+        {% for follower in user.followers %}
+          <div class="col-sm-4">
+            <div class="card">
+              <div>
+                <img src="{{ url_for('static', filename='images/warbler-hero.jpg') }}" alt="" class="card-hero">
+                <a href="{{ url_for('users.show', id=follower.id) }}" class="card-link">
+                  <img src="{{ follower.image_url }}" alt="Image for {{ follower.username }}" class="card-image">
+                  <p>@{{ follower.username }}</p>
+                </a>
+                {% if current_user.is_following(follower) %}
+                  <form method="POST" action="{{url_for('users.follower', follower_id=follower.id)}}?_method=DELETE">
+                    <input type="submit" value="Unfollow" class="btn btn-info btn-sm">
+                  </form>
+                {% else %}
+                  <form method="POST" action="{{url_for('users.follower', follower_id=follower.id)}}">
+                    <input type="submit" value="Follow" class="btn btn-primary btn-sm">
+                  </form>
+                {% endif %}
+              </div>   
             </div>
-          </li>
+          </div>
         {% endfor %}
-      </ul>
+      </div>
     </div>
   </div>
 </div>

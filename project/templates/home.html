@@ -11,15 +11,15 @@
           <div class="row text-center">
             <div class="col-xs-4">
               <p class="small">Messages</p>
-              <h4>{{ current_user.messages.count() }}</h4>
+              <h4><a href="{{ url_for('users.show', id=current_user.id) }}">{{ current_user.messages.count() }}</a></h4>
             </div>
             <div class="col-xs-4">
               <p class="small">Following</p>
-              <h4>{{ current_user.following.count() }}</h4>
+              <h4><a href="{{ url_for('users.following', id=current_user.id) }}">{{ current_user.following.count() }}</a></h4>
             </div>
             <div class="col-xs-4">
               <p class="small">Followers</p>
-              <h4>{{ current_user.followers.count() }}</h4>
+              <h4><a href="{{ url_for('users.followers', id=current_user.id) }}">{{ current_user.followers.count() }}</a></h4>
             </div>
           </div>
         </div>

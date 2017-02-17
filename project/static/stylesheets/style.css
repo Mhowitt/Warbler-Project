@@ -130,3 +130,45 @@ body {
 #sidebar-username {
   margin-top: 30px;
 }
+
+.card {
+  width: 100%;
+  padding-bottom: 100%;
+  border-radius: 5px;
+  border: 1px solid #CCC;
+  position: relative;
+  background: white;
+  margin-top: 20px;
+}
+
+.card > div {
+  position: absolute;
+  background: white;
+}
+
+.card form {
+  float: right;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.card-hero {
+  width: 100%;
+}
+
+.card-image {
+  border: 3px solid #fff;
+  border-radius: 7px;
+  height: 70px;
+  width: 70px;
+  margin-top: -35px;
+}
+
+.card-link {
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.user-cards {
+  margin-bottom: 20px;
+}
