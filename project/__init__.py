@@ -31,7 +31,7 @@ def load_user(id):
 
 @app.route('/')
 def root():
-  messages = Message.query.order_by("timestamp desc").limit(100).all()
+  messages = Message.query.order_by("timestamp asc").limit(100).all()
   return render_template('home.html', messages=messages)
 
 @app.after_request

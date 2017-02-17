@@ -1,24 +1,57 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h1>Info on User #{{ user.id }}</h1>
-  <ul>
-    <li>{{ user.username }}</li>
-    <li>{{ user.email }}</li>
-    <li><a href="{{ url_for('messages.index', id=user.id) }}">See Messages</a></li>
-    <li><img src="{{ user.image_url }}" alt="Image for {{ user.username }}"></li>
-    <li><a href="{{ url_for('users.edit', id=user.id) }}">Edit</a></li>
-    <li>
-      <form method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE">
-        <input type="submit" value="Delete">
-      </form>
-    </li>
-    <li><a href="{{ url_for('root') }}">Go Back</a></li>
-    {% if current_user.is_authenticated and current_user.id != user.id%}
-    <li>
-      <form action="{{url_for('users.follower', follower_id=user.id)}}" method="POST">
-        <button type="submit" class="btn btn-primary">Follow</button>
-      </form>
-    </li>
-    {% endif %}
-  </ul>
+  <div id="warbler-hero" class="full-width"></div>
+  <img src="{{ user.image_url }}" alt="Image for {{ user.username }}" id="profile-avatar">
+  <div class="row full-width">
+    <div class="col-xs-9 col-xs-offset-3">
+      <ul class="user-stats nav nav-pills">
+        <li class="stat">
+          <p class="small">Messages</p>
+          <h4>{{ user.messages.count() }}</h4>
+        </li>
+        <li class="stat">
+          <p class="small">Followers</p>
+          <h4>TBD</h4>
+        </li>
+        <li class="stat">
+          <p class="small">Following</p>
+          <h4>TBD</h4>
+        </li>
+        <li class="stat">
+          <p class="small">Likes</p>
+          <h4>TBD</h4>
+        </li>
+        <div class="pull-right">
+          {% if current_user.id == user.id %}
+            <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-primary">Edit Profile</a>
+            <form method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE">
+              <input type="submit" value="Delete Profile" class="btn btn-danger">
+            </form>
+          {% elif current_user.is_authenticated %}
+            <!-- FOLLOW CODE -->
+          {% endif %}
+        </div> 
+      </ul>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <h4 id="sidebar-username">@{{ user.username }}</h4>
+    </div>
+    <div class="col-sm-6">
+      <ul class="list-group" id="user-messages">
+        {% for message in user.messages.order_by('timestamp desc') %}
+          <li class="list-group-item">
+            <a href="{{ url_for('users.show', id=user.id) }}"><img src="{{ user.image_url }}" alt="" class="timeline-image"></a>
+            <div class="message-area">
+              <a href="{{ url_for('users.show', id=user.id) }}">@{{ user.username }}</a>
+              <span class="text-muted">{{ message.timestamp.strftime('%d %B %Y') }}</span>
+              <p>{{ message.text }}</p>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
 {% endblock %}

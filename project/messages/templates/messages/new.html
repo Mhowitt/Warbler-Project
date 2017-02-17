@@ -12,9 +12,9 @@
         </span>
       {% endfor %}
     {% endif %}
-    {{ form.text(placeholder="What's your message?") }}
+    {{ form.text(placeholder="What's happening?", class="form-control", rows="3") }}
   </div>
-  <button type="submit">Add my message!</button>
+  <button type="submit" class="btn btn-success pull-right">Add my message!</button>
 </form>
 
 {% endblock %}

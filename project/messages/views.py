@@ -12,9 +12,9 @@ messages_blueprint = Blueprint(
   template_folder='templates'
 )
 
-@messages_blueprint.route('/', methods=["GET", "POST"])
+@messages_blueprint.route('/', methods=["POST"])
 def index(id):
-  if request.method == "POST" and current_user.get_id() == str(id):
+  if current_user.get_id() == str(id):
     form = MessageForm()
     if form.validate():
       new_message = Message(
@@ -23,10 +23,8 @@ def index(id):
       )
       db.session.add(new_message)
       db.session.commit()
-      return redirect(url_for('messages.index', id=id))
-    return render_template('messages/new.html', form=form)
-  user = User.query.get(id)
-  return render_template('messages/index.html', messages=user.messages, user=user)
+      return redirect(url_for('users.show', id=id))
+  return render_template('messages/new.html', form=form)
 
 @messages_blueprint.route('/new')
 @login_required
