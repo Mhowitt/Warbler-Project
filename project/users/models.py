@@ -36,3 +36,9 @@ class User(db.Model, UserMixin):
     self.username = username
     self.image_url = image_url
     self.password = bcrypt.generate_password_hash(password).decode('UTF-8')
+
+  def is_followed_by(self, user):
+    return bool(self.followers.filter_by(id=user.id).first())
+
+  def is_following(self, user):
+    return bool(self.following.filter_by(id=user.id).first())

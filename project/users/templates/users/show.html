@@ -11,11 +11,11 @@
         </li>
         <li class="stat">
           <p class="small">Followers</p>
-          <h4>TBD</h4>
+          <h4>{{ user.followers.count() }}</h4>
         </li>
         <li class="stat">
           <p class="small">Following</p>
-          <h4>TBD</h4>
+          <h4>{{ user.following.count() }}</h4>
         </li>
         <li class="stat">
           <p class="small">Likes</p>
@@ -28,7 +28,15 @@
               <input type="submit" value="Delete Profile" class="btn btn-danger">
             </form>
           {% elif current_user.is_authenticated %}
-            <!-- FOLLOW CODE -->
+            {% if current_user.is_following(user) %}
+              <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}?_method=DELETE">
+                <input type="submit" value="Unfollow" class="btn btn-info">
+              </form>
+            {% else %}
+              <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}">
+                <input type="submit" value="Follow" class="btn btn-primary">
+              </form>
+            {% endif %}
           {% endif %}
         </div> 
       </ul>    

@@ -4,7 +4,7 @@
 
 {% if current_user.is_authenticated %}
   <div class="row">
-    <aside class="col-sm-3" id="home-aside">
+    <aside class="col-sm-4" id="home-aside">
       <div class="panel panel-default">
         <div class="panel-body">
           <img src="{{ current_user.image_url }}" alt="" id="profile-image">
@@ -15,17 +15,17 @@
             </div>
             <div class="col-xs-4">
               <p class="small">Following</p>
-              <h4>TBD</h4>
+              <h4>{{ current_user.following.count() }}</h4>
             </div>
             <div class="col-xs-4">
               <p class="small">Followers</p>
-              <h4>TBD</h4>
+              <h4>{{ current_user.followers.count() }}</h4>
             </div>
           </div>
         </div>
       </div>
     </aside>
-    <div class="col-sm-9">
+    <div class="col-sm-8">
       <ul class="list-group">
         {% for message in messages %}
           <li class="list-group-item">

@@ -19,6 +19,21 @@ body {
   margin-top: 100px;
 }
 
+#search {
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+#search + span .btn {
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 34px;
+}
+
+#search.form-control {
+  margin-bottom: 0;
+}
+
 .form-control {
   margin-bottom: 20px;
 }
@@ -27,6 +42,7 @@ body {
 #profile-avatar {
   border-radius: 5px;
   display: block;
+  margin-left: -15px;
 }
 
 #profile-image {

@@ -82,12 +82,14 @@ def logout():
 def edit(id):
   return render_template('users/edit.html', form=UserForm(), user=User.query.get(id))
 
-@users_blueprint.route('/<int:follower_id>/follower', methods=['POST'])
+@users_blueprint.route('/<int:follower_id>/follower', methods=['POST', 'DELETE'])
 @login_required
 def follower(follower_id):
   followed = User.query.get(follower_id)
-  current_user.following.append(followed)
-  from IPython import embed; embed()
+  if request.method == 'POST':
+    current_user.following.append(followed)
+  else:
+    current_user.following.remove(followed)
   db.session.add(current_user)
   db.session.commit()
   return redirect(url_for('users.following'))
