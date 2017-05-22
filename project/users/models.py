@@ -22,6 +22,9 @@ class User(db.Model, UserMixin):
   email = db.Column(db.Text, unique=True)
   username = db.Column(db.Text, unique=True)
   image_url = db.Column(db.Text)
+  header_image_url = db.Column(db.Text)
+  bio = db.Column(db.Text)
+  location = db.Column(db.Text)
   password = db.Column(db.Text)
   messages = db.relationship('Message', backref='user', lazy='dynamic')
   followers = db.relationship("User",
@@ -36,6 +39,9 @@ class User(db.Model, UserMixin):
     self.username = username
     self.image_url = image_url
     self.password = bcrypt.generate_password_hash(password).decode('UTF-8')
+
+  def __repr__(self):
+    return "#{}: email: {} - username: {}".format(self.id, self.email, self.username)
 
   def is_followed_by(self, user):
     return bool(self.followers.filter_by(id=user.id).first())
