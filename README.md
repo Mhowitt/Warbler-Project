@@ -29,3 +29,8 @@ python app.py
 3. Currently on the homepage, you are seeing the last 100 tweets from all users.  Modify the code so that you only see at most the last 100 tweets from users that the logged in user is following!
 4. Add the ability to like a warble.  Once you get likes to work correctly, fix the UI on the user profile to show how many warbles that user has liked.
 5. The application has an N+1 query issue.  Set `app.config['SQLALCHEMY_ECHO'] = True` and try to fix the issue.
+
+### Bonus
+
+1. Use AJAX to implement your like functionality.  You should be able to like a warble without having to refresh the page.
+2. Add AJAX to make your bio and name edit.  Make it so you do not have to refresh the page in order to change your bio or name.
