@@ -41,7 +41,7 @@ python app.py
 
 Here is an example of a test file.  The file will be placed in a `projects/tests` folder.  The name of the file in this case is `test_persons.py`.  Generally, you should prefix your tests with `test`.
 
-```
+```py
 from flask_testing import TestCase
 import unittest
 from datetime import datetime
