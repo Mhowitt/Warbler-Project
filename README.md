@@ -5,6 +5,8 @@ A Twitter clone with a Rithm spin.
 ### Installation
 
 ```sh
+# make a virtual environment
+mkvirtualenv warbler
 # install python requirements
 pip install -r requirements.txt
 
