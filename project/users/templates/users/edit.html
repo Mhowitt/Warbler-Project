@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <!-- <div class="row">
   <div class="col-sm-4 col-sm-offset-4">
@@ -49,38 +47,26 @@
   <div class="col-sm-4 col-sm-offset-4">
     <h2 class="join-message">Edit Your Profile.</h2>
     <form action="{{ url_for('users.show', id=user.id) }}?_method=PATCH" method="POST">
-      {{ form.csrf_token }}
-      {% if form.email.errors %}
-        {% for error in form.email.errors %}
-          <span class="text-danger">
-            {{ error }}
-          </span>
-        {% endfor %}
-      {% endif %}
-      {{ form.email(placeholder="What's your email?", value=user.email, class="form-control") }}
-      {% if form.username.errors %}
-        {% for error in form.username.errors %}
-          <span class="text-danger">
-            {{ error }}
-          </span>
-        {% endfor %}
-      {% endif %}
-      {{ form.username(placeholder="What do you want your username to be?", value=user.username, class="form-control") }}
-      {% if form.image_url.errors %}
-        {% for error in form.image_url.errors %}
-          <span class="text-danger">
-            {{ error }}
-          </span>
-        {% endfor %}
-      {% endif %}
-      {{ form.image_url(placeholder="Optional: What image do you want to use?", value=user.image_url, class="form-control") }}
-      {% if form.password.errors %}
-        {% for error in form.password.errors %}
-          <span class="text-danger">
-            {{ error }}
-          </span>
-        {% endfor %}
-      {% endif %}
+      {{ form.csrf_token }} {% if form.email.errors %} {% for error in form.email.errors %}
+      <span class="text-danger">
+        {{ error }}
+      </span>
+      {% endfor %} {% endif %} {{ form.email(placeholder="What's your email?", value=user.email, class="form-control") }} {% if
+      form.username.errors %} {% for error in form.username.errors %}
+      <span class="text-danger">
+        {{ error }}
+      </span>
+      {% endfor %} {% endif %} {{ form.username(placeholder="What do you want your username to be?", value=user.username, class="form-control")
+      }} {% if form.image_url.errors %} {% for error in form.image_url.errors %}
+      <span class="text-danger">
+        {{ error }}
+      </span>
+      {% endfor %} {% endif %} {{ form.image_url(placeholder="Optional: What image do you want to use?", value=user.image_url,
+      class="form-control") }} {% if form.password.errors %} {% for error in form.password.errors %}
+      <span class="text-danger">
+        {{ error }}
+      </span>
+      {% endfor %} {% endif %}
       <p>To confirm changes, enter your password:</p>
       {{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
       <button type="submit" class="btn btn-success">Edit this user!</button>

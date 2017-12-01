@@ -7,7 +7,8 @@ import os
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'postgres://localhost/warbler-db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL') or 'postgres://localhost/warbler-db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -24,16 +25,20 @@ from project.users.models import User
 from project.messages.models import Message
 
 app.register_blueprint(users_blueprint, url_prefix='/users')
-app.register_blueprint(messages_blueprint, url_prefix='/users/<int:id>/messages')
+app.register_blueprint(
+    messages_blueprint, url_prefix='/users/<int:id>/messages')
+
 
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
+
 @app.route('/')
 def root():
-  messages = Message.query.order_by("timestamp asc").limit(100).all()
-  return render_template('home.html', messages=messages)
+    messages = Message.query.order_by("timestamp asc").limit(100).all()
+    return render_template('home.html', messages=messages)
+
 
 @app.after_request
 def add_header(r):

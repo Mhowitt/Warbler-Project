@@ -1,77 +1,80 @@
-{% extends 'base.html' %}
-{% block content %}
-  <div id="warbler-hero" class="full-width"></div>
-  <img src="{{ user.image_url }}" alt="Image for {{ user.username }}" id="profile-avatar">
-  <div class="row full-width">
-    <div class="col-xs-9 col-xs-offset-3">
-      <ul class="user-stats nav nav-pills">
-        <li class="stat">
-          <p class="small">Messages</p>
-          <h4><a href="{{ url_for('users.show', id=user.id) }}">{{ user.messages.count() }}</a></h4>
-        </li>
-        <li class="stat">
-          <p class="small">Following</p>
-          <h4><a href="{{ url_for('users.following', id=user.id) }}">{{ user.following.count() }}</a></h4>
-        </li>
-        <li class="stat">
-          <p class="small">Followers</p>
-          <h4><a href="{{ url_for('users.followers', id=user.id) }}">{{ user.followers.count() }}</a></h4>
-        </li>
-        <li class="stat">
-          <p class="small">Likes</p>
-          <h4>TBD</h4>
-        </li>
-        <div class="pull-right">
-          {% if current_user.id == user.id %}
-            <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-primary">Edit Profile</a>
-            <form method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE">
-              <input type="submit" value="Delete Profile" class="btn btn-danger">
-            </form>
-          {% elif current_user.is_authenticated %}
-            {% if current_user.is_following(user) %}
-              <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}?_method=DELETE">
-                <input type="submit" value="Unfollow" class="btn btn-info">
-              </form>
-            {% else %}
-              <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}">
-                <input type="submit" value="Follow" class="btn btn-primary">
-              </form>
-            {% endif %}
-          {% endif %}
-        </div> 
-      </ul>    
-    </div>
-  </div>
-  <div class="row user-cards">
-    <div class="col-sm-3">
-      <h4 id="sidebar-username">@{{ user.username }}</h4>
-    </div>
-    <div class="col-sm-9">
-      <div class="row">
-        {% for follower in user.followers %}
-          <div class="col-sm-4">
-            <div class="card">
-              <div>
-                <img src="{{ url_for('static', filename='images/warbler-hero.jpg') }}" alt="" class="card-hero">
-                <a href="{{ url_for('users.show', id=follower.id) }}" class="card-link">
-                  <img src="{{ follower.image_url }}" alt="Image for {{ follower.username }}" class="card-image">
-                  <p>@{{ follower.username }}</p>
-                </a>
-                {% if current_user.is_following(follower) %}
-                  <form method="POST" action="{{url_for('users.follower', follower_id=follower.id)}}?_method=DELETE">
-                    <input type="submit" value="Unfollow" class="btn btn-info btn-sm">
-                  </form>
-                {% else %}
-                  <form method="POST" action="{{url_for('users.follower', follower_id=follower.id)}}">
-                    <input type="submit" value="Follow" class="btn btn-primary btn-sm">
-                  </form>
-                {% endif %}
-              </div>   
-            </div>
-          </div>
-        {% endfor %}
+{% extends 'base.html' %} {% block content %}
+<div id="warbler-hero" class="full-width"></div>
+<img src="{{ user.image_url }}" alt="Image for {{ user.username }}" id="profile-avatar">
+<div class="row full-width">
+  <div class="col-xs-9 col-xs-offset-3">
+    <ul class="user-stats nav nav-pills">
+      <li class="stat">
+        <p class="small">Messages</p>
+        <h4>
+          <a href="{{ url_for('users.show', id=user.id) }}">{{ user.messages.count() }}</a>
+        </h4>
+      </li>
+      <li class="stat">
+        <p class="small">Following</p>
+        <h4>
+          <a href="{{ url_for('users.following', id=user.id) }}">{{ user.following.count() }}</a>
+        </h4>
+      </li>
+      <li class="stat">
+        <p class="small">Followers</p>
+        <h4>
+          <a href="{{ url_for('users.followers', id=user.id) }}">{{ user.followers.count() }}</a>
+        </h4>
+      </li>
+      <li class="stat">
+        <p class="small">Likes</p>
+        <h4>TBD</h4>
+      </li>
+      <div class="pull-right">
+        {% if current_user.id == user.id %}
+        <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-primary">Edit Profile</a>
+        <form method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE">
+          <input type="submit" value="Delete Profile" class="btn btn-danger">
+        </form>
+        {% elif current_user.is_authenticated %} {% if current_user.is_following(user) %}
+        <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}?_method=DELETE">
+          <input type="submit" value="Unfollow" class="btn btn-info">
+        </form>
+        {% else %}
+        <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}">
+          <input type="submit" value="Follow" class="btn btn-primary">
+        </form>
+        {% endif %} {% endif %}
       </div>
+    </ul>
+  </div>
+</div>
+<div class="row user-cards">
+  <div class="col-sm-3">
+    <h4 id="sidebar-username">@{{ user.username }}</h4>
+  </div>
+  <div class="col-sm-9">
+    <div class="row">
+      {% for follower in user.followers %}
+      <div class="col-sm-4">
+        <div class="card">
+          <div>
+            <img src="{{ url_for('static', filename='images/warbler-hero.jpg') }}" alt="" class="card-hero">
+            <a href="{{ url_for('users.show', id=follower.id) }}" class="card-link">
+              <img src="{{ follower.image_url }}" alt="Image for {{ follower.username }}" class="card-image">
+              <p>@{{ follower.username }}</p>
+            </a>
+            {% if current_user.is_following(follower) %}
+            <form method="POST" action="{{url_for('users.follower', follower_id=follower.id)}}?_method=DELETE">
+              <input type="submit" value="Unfollow" class="btn btn-info btn-sm">
+            </form>
+            {% else %}
+            <form method="POST" action="{{url_for('users.follower', follower_id=follower.id)}}">
+              <input type="submit" value="Follow" class="btn btn-primary btn-sm">
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
   </div>
+</div>
 </div>
 {% endblock %}
