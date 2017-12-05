@@ -8,11 +8,14 @@ FollowersFollowee = db.Table('follows',
                                        primary_key=True),
                              db.Column('followee_id',
                                        db.Integer,
-                                       db.ForeignKey('users.id', ondelete="cascade")),
+                                       db.ForeignKey('users.id',
+                                                     ondelete="cascade")),
                              db.Column('follower_id',
                                        db.Integer,
-                                       db.ForeignKey('users.id', ondelete="cascade")),
-                             db.CheckConstraint('follower_id != followee_id', name="no_self_follow"))
+                                       db.ForeignKey('users.id',
+                                                     ondelete="cascade")),
+                             db.CheckConstraint('follower_id != followee_id',
+                                                name="no_self_follow"))
 
 
 class User(db.Model, UserMixin):
@@ -45,10 +48,20 @@ class User(db.Model, UserMixin):
         self.password = bcrypt.generate_password_hash(password).decode('UTF-8')
 
     def __repr__(self):
-        return "#{}: email: {} - username: {}".format(self.id, self.email, self.username)
+        return f"#{self.id}: email: {self.email} - username: {self.username}"
 
     def is_followed_by(self, user):
         return bool(self.followers.filter_by(id=user.id).first())
 
     def is_following(self, user):
         return bool(self.following.filter_by(id=user.id).first())
+
+    @classmethod
+    def authenticate(cls, username, password):
+        found_user = cls.query.filter_by(username=username).first()
+        if found_user:
+            is_authenticated = bcrypt.check_password_hash(found_user.password,
+                                                          password)
+            if is_authenticated:
+                return found_user
+        return False

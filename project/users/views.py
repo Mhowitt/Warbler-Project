@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for, Blueprint, flash
 from project.users.models import User
 from project.users.forms import UserForm, LoginForm
-from project import db, bcrypt
+from project import db
 from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
 from functools import wraps
@@ -62,16 +62,13 @@ def login():
     form = LoginForm()
     if request.method == "POST":
         if form.validate():
-            found_user = User.query.filter_by(
-                username=form.username.data).first()
+            found_user = User.authenticate(
+                form.username.data, form.password.data)
             if found_user:
-                is_authenticated = bcrypt.check_password_hash(
-                    found_user.password, form.password.data)
-                if is_authenticated:
-                    login_user(found_user)
-                    flash({'text': "Hello, {}!".format(
-                        found_user.username), 'status': 'success'})
-                    return redirect(url_for('root'))
+                login_user(found_user)
+                flash({'text': f"Hello, {found_user.username}!",
+                      'status': 'success'})
+                return redirect(url_for('root'))
             flash({'text': "Invalid credentials.", 'status': 'danger'})
             return render_template('users/login.html', form=form)
     return render_template('users/login.html', form=form)
@@ -89,10 +86,13 @@ def logout():
 @login_required
 @ensure_correct_user
 def edit(id):
-    return render_template('users/edit.html', form=UserForm(), user=User.query.get(id))
+    return render_template('users/edit.html',
+                           form=UserForm(),
+                           user=User.query.get(id))
 
 
-@users_blueprint.route('/<int:follower_id>/follower', methods=['POST', 'DELETE'])
+@users_blueprint.route('/<int:follower_id>/follower',
+                       methods=['POST', 'DELETE'])
 @login_required
 def follower(follower_id):
     followed = User.query.get(follower_id)
@@ -120,12 +120,15 @@ def followers(id):
 @users_blueprint.route('/<int:id>', methods=["GET", "PATCH", "DELETE"])
 def show(id):
     found_user = User.query.get(id)
-    if request.method == 'GET' or current_user.is_anonymous or current_user.get_id() != str(id):
+    if (request.method == 'GET' or
+       current_user.is_anonymous or
+       current_user.get_id() != str(id)):
         return render_template('users/show.html', user=found_user)
     if request.method == b"PATCH":
         form = UserForm(request.form)
         if form.validate():
-            if bcrypt.check_password_hash(found_user.password, form.password.data):
+            if User.authenticate(found_user.password,
+                                 form.password.data):
                 found_user.username = form.username.data
                 found_user.email = form.email.data
                 found_user.image_url = form.image_url.data or None
