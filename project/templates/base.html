@@ -29,7 +29,11 @@
     href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
-<body>
+{% if request.endpoint == 'users.signup' or request.endpoint == 'users.login' %}
+  <body class="onboarding">
+{% else %}
+  <body>
+{% endif %}
   <nav class="navbar navbar-expand">
     <div class="container-fluid">
       <div class="navbar-header">

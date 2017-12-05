@@ -14,6 +14,7 @@ body {
   background-color: #fff;
   height: 46px;
   border-bottom: 1px solid rgba(0,0,0,0.25);
+  margin-bottom: 2rem;
 }
 
 .navbar a {
@@ -91,6 +92,40 @@ nav form.navbar-form {
 #search:focus {
   box-shadow: none;
   border: 2px solid #007bff;
+}
+
+.onboarding > .navbar {
+  background-image: url('/static/images/nav-bg.png');
+  background-size: 100% 100%;
+}
+
+.onboarding .navbar-header {
+  margin: 0 auto;
+}
+
+.onboarding .navbar-brand {
+  margin: 0;
+}
+
+.onboarding .navbar-brand span {
+  display: none;
+}
+
+.onboarding .nav.navbar-nav.navbar-right {
+  position: absolute;
+  right: 16px;
+}
+
+.onboarding > .navbar a {
+  color: #fff;
+}
+
+.onboarding > .navbar form.navbar-form {
+  display: none;
+}
+
+.onboarding {
+  background-color: #fff;
 }
 
 @media (max-width: 468px) {
@@ -282,4 +317,20 @@ nav form.navbar-form {
   right: 0;
   bottom: 0;
   background: rgba(255,255,255,0.3);
+}
+
+/* Signup/Login */
+
+#user_form .btn {
+  border-radius: 50px;
+}
+
+#user_form .btn:hover {
+  cursor: pointer;
+}
+
+#user_form input.form-control {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px;
 }
