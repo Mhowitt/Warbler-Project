@@ -1,10 +1,40 @@
+/* General */
+
 body {
   background-color: #f5f8fa;
+}
+
+.form-control {
+  margin-bottom: 20px;
+}
+
+/* Nav */
+
+.navbar {
+  background-color: #fff;
+  height: 46px;
+  border-bottom: 1px solid rgba(0,0,0,0.25);
+}
+
+.navbar a {
+  color: #66757f;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  color: #1c94e0;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
 }
 
 .navbar-brand > img {
   display: inline-block;
   margin-bottom: 2px;
+  margin-right: 5px;
   width: 20px;
   border-radius: 2px;
 }
@@ -15,27 +45,64 @@ body {
   border-radius: 3px;
 }
 
-.join-message {
-  margin-top: 100px;
+ul.nav.navbar-nav {
+  align-items: center;
 }
 
-#search {
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+ul.nav.navbar-nav li {
+  margin: 0 0.5rem;
+  display: flex;
 }
 
-#search + span .btn {
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  height: 34px;
+nav form.navbar-form {
+  display: flex;
+  position: relative;
 }
 
 #search.form-control {
+  border-radius: 20px;
   margin-bottom: 0;
+  width: 100%;
+  font-size: 13px;
+  padding-right: 28px;
 }
 
-.form-control {
-  margin-bottom: 20px;
+#search.form-control + .btn {
+  position: absolute;
+  right: 9px;
+  top: 2px;
+  bottom: 4px;
+  z-index: 1;
+  border-radius: 20px;
+  padding: 0;
+  color: #66757f;
+}
+
+#search.form-control + .btn:hover {
+  cursor: pointer;
+}
+
+#search.form-control + .btn:active,
+#search.form-control + .btn:focus {
+  box-shadow: none;
+}
+
+#search:active,
+#search:focus {
+  box-shadow: none;
+  border: 2px solid #007bff;
+}
+
+@media (max-width: 468px) {
+  nav form.navbar-form {
+    display: none;
+  }
+}
+
+/* User Profile */
+
+.join-message {
+  margin-top: 100px;
 }
 
 #profile-image,
@@ -171,4 +238,48 @@ body {
 
 .user-cards {
   margin-bottom: 20px;
+}
+
+/* Signed out home */
+
+.home-hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+  left: 0;
+  z-index: -1;
+  background-image: url('/static/images/signed-out-home.jpg');
+  background-size: cover;
+  background-position: center center;
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+  text-shadow: 0 0 8px #66757f;
+}
+
+.home-hero .btn {
+  border-radius: 20px;
+  text-shadow: none;
+  position: relative;
+  z-index: 1;
+  width: 150px;
+}
+
+.home-hero h1 {
+  margin-bottom: 4rem;
+}
+
+.home-hero:before {
+  content:'';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255,255,255,0.3);
 }

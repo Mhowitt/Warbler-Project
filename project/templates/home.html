@@ -47,6 +47,11 @@
   </div>
 </div>
 {% else %}
-<h1>Welcome to Warbler!</h1>
-<h3>Please sign up or log in.</h3>
-{% endif %} {% endblock %}
+<div class="home-hero">
+  <h1>What's Happening?</h1>
+  <h4>New to Warbler?</h4>
+  <p>Sign up now to get your own personalized timeline!</p>
+  <a href="{{ url_for('users.signup') }}" class="btn btn-primary">Sign up</a>
+</div>
+{% endif %}
+{% endblock %}
