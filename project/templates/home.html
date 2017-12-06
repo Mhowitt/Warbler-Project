@@ -2,37 +2,42 @@
 {% block content %} 
 {% if current_user.is_authenticated %}
 <div class="row">
-  <aside class="col-sm-4" id="home-aside">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <img src="{{ current_user.image_url }}" alt="" id="profile-image">
-        <div class="row text-center">
-          <div class="col-xs-4">
+  <aside class="col-lg-3 col-md-12" id="home-aside">
+    <div class="card user-card">
+      <div>
+        <img src="{{ url_for('static', filename='images/warbler-hero.jpg') }}" alt="" class="card-hero">
+        <a href="{{ url_for('users.show', id=current_user.id) }}" class="card-link">
+          <img src="{{ current_user.image_url }}" alt="Image for {{ current_user.username }}" class="card-image">
+          <p>@{{ current_user.username }}</p>
+        </a>
+        <ul class="user-stats nav nav-pills">
+          <li class="stat">
             <p class="small">Messages</p>
             <h4>
               <a href="{{ url_for('users.show', id=current_user.id) }}">{{ current_user.messages.count() }}</a>
             </h4>
-          </div>
-          <div class="col-xs-4">
+          </li>
+          <li class="stat">
             <p class="small">Following</p>
             <h4>
               <a href="{{ url_for('users.following', id=current_user.id) }}">{{ current_user.following.count() }}</a>
             </h4>
-          </div>
-          <div class="col-xs-4">
+          </li>
+          <li class="stat">
             <p class="small">Followers</p>
             <h4>
               <a href="{{ url_for('users.followers', id=current_user.id) }}">{{ current_user.followers.count() }}</a>
             </h4>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
   </aside>
-  <div class="col-sm-8">
-    <ul class="list-group">
+  <div class="col-lg-6 col-md-12">
+    <ul class="list-group" id="messages">
       {% for message in messages %}
       <li class="list-group-item">
+        <a href="{{ url_for('messages.show', id=message.user.id, message_id=message.id ) }}" class="message-link"/>
         <a href="{{ url_for('users.show', id=message.user.id) }}">
           <img src="{{ message.user.image_url }}" alt="" class="timeline-image">
         </a>

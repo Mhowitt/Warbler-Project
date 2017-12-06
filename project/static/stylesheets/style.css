@@ -1,11 +1,19 @@
 /* General */
 
 body {
-  background-color: #f5f8fa;
+  background-color: #e6ecf0;
 }
 
 .form-control {
   margin-bottom: 20px;
+}
+
+.btn {
+  border-radius: 50px;
+}
+
+.btn:hover {
+  cursor: pointer;
 }
 
 /* Nav */
@@ -14,7 +22,9 @@ body {
   background-color: #fff;
   height: 46px;
   border-bottom: 1px solid rgba(0,0,0,0.25);
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 9999;
 }
 
 .navbar a {
@@ -41,9 +51,8 @@ body {
 }
 
 .nav > li > a > img {
-  margin: -20px 0 -15px;
-  width: 40px;
-  border-radius: 3px;
+  width: 32px;
+  border-radius: 32px;
 }
 
 ul.nav.navbar-nav {
@@ -66,6 +75,7 @@ nav form.navbar-form {
   width: 100%;
   font-size: 13px;
   padding-right: 28px;
+  box-sizing: border-box;
 }
 
 #search.form-control + .btn {
@@ -74,13 +84,8 @@ nav form.navbar-form {
   top: 2px;
   bottom: 4px;
   z-index: 1;
-  border-radius: 20px;
   padding: 0;
   color: #66757f;
-}
-
-#search.form-control + .btn:hover {
-  cursor: pointer;
 }
 
 #search.form-control + .btn:active,
@@ -134,6 +139,10 @@ nav form.navbar-form {
   }
 }
 
+nav + .container {
+  margin-bottom: 1rem;
+}
+
 /* User Profile */
 
 .join-message {
@@ -142,7 +151,7 @@ nav form.navbar-form {
 
 #profile-image,
 #profile-avatar {
-  border-radius: 5px;
+  border-radius: 100%;
   display: block;
   margin-left: -15px;
 }
@@ -157,17 +166,16 @@ nav form.navbar-form {
   height: 200px;
   border: 5px solid #FFF;
   margin-top: -120px;
-  border-radius: 12px;
   z-index: 1;
   position: relative;
   box-shadow: 0 1px 1px rgba(136,153,166,0.15);
 }
 
 .timeline-image {
-  border-radius: 5px;
+  border-radius: 48px;
   height: 48px;
   width: 48px;
-  margin-top: -5px;
+  margin-top: 2px;
 }
 
 .message-area,
@@ -176,13 +184,13 @@ nav form.navbar-form {
 }
 
 .message-area {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
 #warbler-hero {
   background-image: url('/static/images/warbler-hero.jpg');
   height: 360px;
-  margin-top: -20px;
+  margin-top: -16px;
   opacity: 0.7;
 }
 
@@ -197,43 +205,91 @@ nav form.navbar-form {
 .row.full-width {
   background-color: #fff;
   margin-top: -80px;
+  margin-bottom: 1rem;
   border-bottom: 1px solid #CCC;
   border-top: 1px solid #CCC;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.25);
+  height: 60px;
+  align-items: center;
 }
 
-.user-stats .btn {
-  margin-top: 12px;
+.user-stats > .ml-auto {
+  display: flex;
+  align-items: center;
 }
 
-.user-stats .pull-right form {
-  display: inline;
+.user-stats > .ml-auto .btn {
+  min-width: 105px;
+  padding: 6px 16px;
 }
 
 .stat {
-  margin-right: 20px;
   text-align: center;
+  height: 60px;
+  box-sizing: border-box;
+  padding: 14px 15px 7px;
+  line-height: 1;
 }
 
 .stat > .small {
-  color: #555;
-  text-transform: uppercase;
-  font-size: 60%;
-  margin: 10px 0 0;
+  color: #657786;
+  font-weight: bold;
+  font-size: 12px;
+  letter-spacing: .02em;
+  margin-bottom: 0;
 }
 
 .stat > .small + h4 {
-  margin-top: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  padding-top: 3px;
 }
 
-#user-messages {
-  margin-top: 10px;
+#messages {
+  position: relative;
+}
+
+#messages .message-link {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
+
+#messages .list-group-item a:not(.message-link) {
+  position: relative;
+  z-index: 2;
+}
+
+#messages .list-group-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 7px 20px 12px;
+}
+
+#messages:not(.no-hover) .list-group-item:hover {
+  background-color: #e6ecf0;
 }
 
 #sidebar-username {
   margin-top: 30px;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 28px;
+  word-wrap: break-word;
 }
 
-.card {
+@media (max-width: 768px) {
+  .user-stats .stat {
+    display: none;
+  }
+}
+
+/* User cards on follower/following pages */
+
+.user-card {
   width: 100%;
   padding-bottom: 100%;
   border-radius: 5px;
@@ -243,15 +299,20 @@ nav form.navbar-form {
   margin-top: 20px;
 }
 
-.card > div {
+.user-card > div {
   position: absolute;
   background: white;
 }
 
-.card form {
-  float: right;
+.user-card form {
   margin-top: 5px;
   margin-right: 5px;
+}
+
+.user-card form .btn {
+  min-width: 89px;
+  padding: 4px 12px;
+  font-size: 12px;
 }
 
 .card-hero {
@@ -260,7 +321,7 @@ nav form.navbar-form {
 
 .card-image {
   border: 3px solid #fff;
-  border-radius: 7px;
+  border-radius: 70px;
   height: 70px;
   width: 70px;
   margin-top: -35px;
@@ -271,8 +332,22 @@ nav form.navbar-form {
   margin-left: 10px;
 }
 
+.card-link > p {
+  position: absolute;
+}
+
 .user-cards {
   margin-bottom: 20px;
+}
+
+.card-inner {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-contents {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* Signed out home */
@@ -298,7 +373,6 @@ nav form.navbar-form {
 }
 
 .home-hero .btn {
-  border-radius: 20px;
   text-shadow: none;
   position: relative;
   z-index: 1;
@@ -319,18 +393,87 @@ nav form.navbar-form {
   background: rgba(255,255,255,0.3);
 }
 
+/* Signed in Home */
+
+#home-aside > .user-card {
+  margin-top: 0;
+  padding-bottom: 0;
+}
+
+#home-aside > .user-card .card-link {
+  display: flex;
+}
+
+#home-aside > .user-card .card-link > p {
+  margin-left: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+#home-aside > .user-card .stat {
+  padding: 14px 0 7px;
+}
+
+#home-aside > .user-card .user-stats {
+  display: flex;
+  justify-content: space-around;
+}
+
+#home-aside .card-link > p {
+  position: relative;
+}
+
+#home-aside .stat h4 {
+  text-align: left;
+}
+
 /* Signup/Login */
-
-#user_form .btn {
-  border-radius: 50px;
-}
-
-#user_form .btn:hover {
-  cursor: pointer;
-}
 
 #user_form input.form-control {
   font-size: 18px;
   font-weight: bold;
   padding: 12px;
+}
+
+/* Edit Page */
+
+.edit-btn-area {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-btn-area > .btn {
+  width: 48%;
+}
+
+/* Message Show page */
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #62676c;
+}
+
+#messages.no-hover .message-area {
+  width: 100%;
+}
+
+#messages.no-hover .message-heading {
+  display: flex;
+  justify-content: space-between;
+  height: 47px;
+  margin-top: 3px;
+}
+
+#messages.no-hover .message-heading .btn {
+  min-width: 105px;
+}
+
+.single-message {
+  font-size: 27px;
+  line-height: 32px;
+  letter-spacing: .01em;
+  margin-bottom: 10px;
 }

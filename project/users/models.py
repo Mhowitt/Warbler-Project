@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
                                     'following', lazy='dynamic'),
                                 lazy='dynamic')
 
-    def __init__(self, email, username, password, image_url='https://pbs.twimg.com/profile_images/524943875543420928/-0QwXz_i.jpeg'):
+    def __init__(self, email, username, password, image_url='/static/images/default-pic.png'):
         self.email = email
         self.username = username
         self.image_url = image_url

@@ -13,6 +13,7 @@ messages_blueprint = Blueprint(
 
 
 @messages_blueprint.route('/', methods=["POST"])
+@login_required
 def index(id):
     if current_user.get_id() == str(id):
         form = MessageForm()
@@ -31,14 +32,14 @@ def index(id):
 @login_required
 @ensure_correct_user
 def new(id):
-    return render_template('messages/new.html', form=MessageForm(), user_id=id)
+    return render_template('messages/new.html', form=MessageForm())
 
 
 @messages_blueprint.route('/<int:message_id>', methods=["GET", "DELETE"])
 def show(id, message_id):
     found_message = Message.query.get(message_id)
-    if request.method == b"DELETE" and current_user.get_id() == id:
+    if request.method == b"DELETE" and current_user.id == id:
         db.session.delete(found_message)
         db.session.commit()
-        return redirect(url_for('messages.index', id=id))
+        return redirect(url_for('users.show', id=id))
     return render_template('messages/show.html', message=found_message)

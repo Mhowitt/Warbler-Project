@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div id="warbler-hero" class="full-width"></div>
+<img src="{{ user.image_url }}" alt="Image for {{ user.username }}" id="profile-avatar">
+<div class="row full-width">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-9">
+        <ul class="user-stats nav nav-pills">
+          <li class="stat">
+            <p class="small">Messages</p>
+            <h4>
+              <a href="{{ url_for('users.show', id=user.id) }}">{{ user.messages.count() }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Following</p>
+            <h4>
+              <a href="{{ url_for('users.following', id=user.id) }}">{{ user.following.count() }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Followers</p>
+            <h4>
+              <a href="{{ url_for('users.followers', id=user.id) }}">{{ user.followers.count() }}</a>
+            </h4>
+          </li>
+          <li class="stat">
+            <p class="small">Likes</p>
+            <h4>TBD</h4>
+          </li>
+          <div class="ml-auto">
+            {% if current_user.id == user.id %}
+            <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-outline-secondary">Edit Profile</a>
+            <form method="POST" action="{{url_for('users.show', id=user.id)}}?_method=DELETE" class="form-inline">
+              <input type="submit" value="Delete Profile" class="btn btn-outline-danger ml-2">
+            </form>
+            {% elif current_user.is_authenticated %} {% if current_user.is_following(user) %}
+            <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}?_method=DELETE">
+              <input type="submit" value="Unfollow" class="btn btn-primary">
+            </form>
+            {% else %}
+            <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}">
+              <input type="submit" value="Follow" class="btn btn-outline-primary">
+            </form>
+            {% endif %} {% endif %}
+          </div>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-3">
+    <h4 id="sidebar-username">@{{ user.username }}</h4>
+  </div>
+  {% block user_details %}
+  {% endblock %}
+</div>
+</div>
+{% endblock %}
