@@ -40,9 +40,9 @@ When you're ready, address the following user stories:
 
 ### Bonus
 
-1. (_Technical_) - Add tests. Test features such as login, making sure you cannot edit someone else profile, etc.  You can see a sample test file below.  You can also check out the [testing notes](https://github.com/rithmschool/python_curriculum/blob/master/Unit-02/08-testing_continued.md) in the python curriculum.  To run the tests, `pip install green` then run `green` from the root of your project.
-1. As a user, I should be able to like a warble without having to refresh the page.
-1. As a user, I should not have to refresh the page in order to change my bio or name.
+1. (_Technical_) - Add tests. Test features such as login, making sure you cannot edit someone else profile, etc.  There is a sample test file [below](#appendix-test-example).  You can also check out the [testing notes](https://github.com/rithmschool/python_curriculum/blob/master/Unit-02/08-testing_continued.md) in the python curriculum.  To run the tests, `pip install green` then run `green` from the root of your project.
+1. As a user, I should not have to refresh the page when I like a warble.
+1. As a user, I should not have to refresh the page when I change my bio or name in my profile.
 
 &nbsp;
 
