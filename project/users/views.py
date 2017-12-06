@@ -127,7 +127,7 @@ def show(id):
     if request.method == b"PATCH":
         form = UserForm(request.form)
         if form.validate():
-            if User.authenticate(found_user.password,
+            if User.authenticate(found_user.username,
                                  form.password.data):
                 found_user.username = form.username.data
                 found_user.email = form.email.data
