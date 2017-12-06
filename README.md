@@ -49,158 +49,70 @@ When you're ready, address the following user stories:
 
 &nbsp;
 
-### Appendix: Test Example
+### Appendix: Testing
 
-Here is an example of a test file.  The file will be placed in a `projects/tests` folder.  The name of the file in this case is `test_persons.py`.  Generally, you should prefix your tests with `test`.
+There is at LEAST one bug in the application, but it's not necessarily obvious where it is (there's a hint at the bottom of the readme). This is why testing is so important!
 
-&nbsp;
+Let's briefly discuss a couple of things related to tests: _how_ you should test, and _what_ you should test. First, let's talk about the how. Your test files should all live inside of a folder called `tests`, and that folder should live inside of your `project` directory. Inside of `tests`, you can organize your files however you see fit. For instance, here's what the file structure might look like with four different test files:
 
-```python
-from flask_testing import TestCase
-import unittest
-from datetime import datetime
-from project.models import Person, User, Tag, Taggable
-from project import app, db, bcrypt
-from flask import json
-
-
-class BaseTestCase(TestCase):
-    def _login_user(self, email, password, follow_redirects=False):
-        return self.client.post('/users/login',
-                                data=dict(email=email,
-                                          password=password), follow_redirects=follow_redirects)
-
-    def create_app(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
-        app.config['TESTING'] = True
-        app.config['WTF_CSRF_ENABLED'] = False
-        return app
-
-    def setUp(self):
-        db.create_all()
-        user1 = User('aricliesenfelt@gmail.com', 'Aric Liesenfelt', 'password1', '9515706209', True, False)
-        user2 = User('tommyhopkins@gmail.com', 'Tommy Hopkins', 'password2', '1111111111', True, True)
-        db.session.add_all([user1, user2])
-        db.session.commit()
-
-    def tearDown(self):
-        db.session.remove()
-        db.drop_all()
-
-    # Test creating a new person that passes all validators
-    def testNewPerson(self):
-        self._login_user('tommyhopkins@gmail.com', 'password2')
-        response = self.client.post('/persons/',
-                                    data=dict(email='aaron.m.manley@gmail.com',
-                                              phone="4087261650",
-                                              name='Aaron',
-                                              title='Awesome',
-                                              description='I am an awesome person'
-                                              ), follow_redirects=True
-                                    )
-        self.assertEqual(response.status_code, 200)
-        self.assert_template_used('persons/index.html')
-        self.assertEqual(
-            Person.query.filter_by(phone="4087261650").first().name,
-            'Aaron')
-        self.assertFalse(Person.query.filter_by(phone="4087261650").first().slow_lp,
-                         False)
-        self.assertEqual(
-            Person.query.filter_by(phone="4087261650").first().email,
-            'aaron.m.manley@gmail.com')
-        self.assertEqual(
-            Person.query.filter_by(phone="4087261650").first().description,
-            "I am an awesome person")
-
-    # Test new person that fails form validation, should render persons/new
-    def testNewPersonFailValidation(self):
-        self._login_user('tommyhopkins@gmail.com', 'password2')
-        response = self.client.post('/persons/',
-                                    data=dict(email='aaron.m.manley@gmail.com',
-                                              phone="",
-                                              name='',
-                                              title='Awesome',
-                                              description='I am an awesome person'
-                                              )
-                                    )
-
-        self.assertEqual(response.status_code, 200)
-        self.assert_template_used('persons/new.html')
-
-    def testEditUser(self):
-
-        self._login_user('tommyhopkins@gmail.com', 'password2')
-        # create new user to test editing on
-        self.client.post('/persons/',
-                         data=dict(email='aaron.m.manley@gmail.com',
-                                   phone="4087261650",
-                                   name='Aaron',
-                                   title='Awesome',
-                                   description='I am an awesome person'
-                                   ))
-
-        response = self.client.post('/persons/1?_method=PATCH',
-                                    data=dict(email='notaaron@rithmschool.com',
-                                              phone="9992223333",
-                                              title='Murky',
-                                              name='Aaron',
-                                              description='I am a Frog'), follow_redirects=True
-                                    )
-
-        self.assertEqual(len(Person.query.all()), 1)
-        self.assertEqual(response.status_code, 200)
-        self.assert_template_used('persons/show.html')
-        self.assertEqual(
-            Person.query.filter_by(phone="9992223333").first().id,
-            1)
-        self.assertEqual(
-            Person.query.filter_by(phone="9992223333").first().name,
-            'Aaron')
-        self.assertFalse(Person.query.filter_by(phone="9992223333").first().slow_lp,
-                         False)
-        self.assertEqual(
-            Person.query.filter_by(phone="9992223333").first().email,
-            'notaaron@rithmschool.com')
-        self.assertEqual(
-            Person.query.filter_by(phone="9992223333").first().description,
-            'I am a Frog')
-
-    def testAddTag(self):
-        # Adding a new tag
-        self._login_user('tommyhopkins@gmail.com', 'password2')
-        new_person = Person('Mark Zuckerberg')
-        db.session.add(new_person)
-        db.session.commit()
-        response = self.client.post('/persons/1/tags',
-                                    data=dict(tag='newtag'), follow_redirects=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(Tag.query.count(), 1)
-        self.assertEqual(Taggable.query.count(), 1)
-        self.assert_template_used('persons/show.html')
-        # Re-adding the same tag shouldn't allow you
-        response = self.client.post('/persons/1/tags',
-                                    data=dict(tag='newtag'))
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(Tag.query.count(), 1)
-        self.assertEqual(Taggable.query.count(), 1)
-
-    def testArchive(self):
-        self._login_user('tommyhopkins@gmail.com', 'password2')
-        person1 = Person('Mark Zuckerberg')
-        person2 = Person('Lars Zuc')
-        db.session.add_all([person1, person2])
-        db.session.commit()
-        person_1 = Person.query.get(1)
-        person_2 = Person.query.get(2)
-        person_2.archived = True
-        response1 = self.client.get('/persons/1/archive')
-        response2 = self.client.get('/persons/2/archive')
-        self.assertEqual(response1.status_code, 302)
-        self.assertEqual(response2.status_code, 302)
-        self.assertEqual(person_1.archived, True)
-        self.assertEqual(person_2.archived, False)
-
-
-if __name__ == '__main__':
-    unittest.main()
+```sh
+.
+├── project
+│   ├── tests
+│   │   ├── test_user_model.py
+│   │   ├── test_user_controller.py
+│   │   ├── test_message_model.py
+│   │   └── test_message_controller.py
 ```
+
+In this case, there are four test files: two for testing the models, and two for testing the routes/controllers.
+
+To run the tests, you can run `green` from the command line (this is one of the requirements in `requirements.txt`). `green` is a test runner that will automatically run all tests inside of the `project/tests` directory. If you want to only run one file, you can do something like `green project/tests/NAME_OF_FILE` to run tests for that file only. Note that all of your test files should begin with the word `test`.
+
+So that's _how_ you should test. But _what_, exactly, should you be testing? Let's take the above file structure as an example.
+
+For model tests, you can simply verify that models have the attributes you expect, and write tests for any model methods.
+
+For the routing and controller tests, things get a bit more complicated. You should make sure that requests to all the endpoints supported in the `views` files return valid responses. If certain routes are protected, you should make sure that users who are not authenticated or authorized cannot succesfully make those requests. Conversely, if they are authenticated or authorized, they should be able to.
+
+These tests are a bit trickier to write because they require you to make requests in the test, and look through the response in order to verify that the HTML you get back from the server looks correct.
+
+Here are a few different resources for testing your Flask applications.
+
+- [Testing with Flask](https://www.rithmschool.com/courses/flask-fundamentals/testing-with-flask)
+- [Sample Tests for Departments in a many-to-many](https://github.com/rithmschool/python_curriculum/blob/master/Unit-02/examples/many_to_many/project/tests/test_departments.py)
+- [Testing - Logging In and Out](http://flask.pocoo.org/docs/0.12/testing/#logging-in-and-out)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Looking for a 🐛? Here's a hint: the first step in producing the bug is searching for yourself while you're logged in.
