@@ -12,6 +12,12 @@ for i in 0...100
   $profile_urls.push "https://randomuser.me/api/portraits/men/#{i}.jpg"
 end
 
+$header_image_urls = []
+for i in 1...100
+  $header_image_urls.push(HTTParty.get("http://www.splashbase.co/api/v1/images/#{i}"))
+end
+$header_image_urls.map! { |response| response['url'] }
+
 $num_users = 300
 srand(DateTime.now.strftime('%Q').to_i)
 $hipster = <<-HIPSTER
@@ -254,6 +260,9 @@ def random_profile_image
   $profile_urls[rand($profile_urls.length)]
 end
 
+def random_header_image
+  $header_image_urls[rand($header_image_urls.length)]
+end
 
 def insert_users
   str = "INSERT INTO users (email, username, image_url, header_image_url, bio, location, password) VALUES "
@@ -275,7 +284,7 @@ def insert_users
     end
     users.push new_user
 
-    user_output.push "('#{new_email}', '#{new_user}', '#{random_profile_image}', '#{random_profile_image}', 'Im super cool', '#{Faker::Address.city}', '$2b$12$s4gUmTg2tpwSH2J5T/YYeOdUKWYRO4AhTMgpQn.m49EIn5tL1Tzmu'),"
+    user_output.push "('#{new_email}', '#{new_user}', '#{random_profile_image}', '#{random_header_image}', 'Im super cool', '#{Faker::Address.city}', '$2b$12$s4gUmTg2tpwSH2J5T/YYeOdUKWYRO4AhTMgpQn.m49EIn5tL1Tzmu'),"
   end
 
   user_output[-1] = user_output[-1].chomp(",") + ";"
