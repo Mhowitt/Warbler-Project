@@ -34,7 +34,7 @@ When you're ready, address the following user stories:
 
 1. As a user, I want to see my name, location, bio, and my header image on my profile page.
 1. As a user, I want to be able to edit my name, location, bio, and my header image on my profile edit page.
-1. As a user, I want to see the last 100 warbles **only from the users that I am following, and myself** rather than tweets from _all_ users.
+1. As a user, I want to see the last 100 warbles **only from the users that I am following, and myself** rather than warbles from _all_ users.
 1. As a user, I want to be able to "like" a warble.
 1. As a user, I want to be able to see how many warbles I "liked" on my profile page.
 1. (_Technical_) - Add tests. Test features such as login, making sure you cannot edit someone else profile, etc.  There is a sample test file [below](#appendix-test-example).  You can also check out the [testing notes](https://github.com/rithmschool/python_curriculum/blob/master/Unit-02/08-testing_continued.md) in the python curriculum.  To run the tests, `pip install green` then run `green` from the root of your project.
