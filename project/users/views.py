@@ -6,11 +6,7 @@ from sqlalchemy.exc import IntegrityError
 from flask_login import login_user, logout_user, current_user, login_required
 from functools import wraps
 
-users_blueprint = Blueprint(
-    'users',
-    __name__,
-    template_folder='templates'
-)
+users_blueprint = Blueprint('users', __name__, template_folder='templates')
 
 
 def ensure_correct_user(fn):
@@ -20,6 +16,7 @@ def ensure_correct_user(fn):
             flash({'text': "Not Authorized", 'status': 'danger'})
             return redirect(url_for('root'))
         return fn(*args, **kwargs)
+
     return wrapper
 
 
@@ -43,8 +40,7 @@ def signup():
                 new_user = User(
                     username=form.username.data,
                     email=form.email.data,
-                    password=form.password.data
-                )
+                    password=form.password.data)
                 if form.image_url.data:
                     new_user.image_url = form.image_url.data
                 db.session.add(new_user)
@@ -62,12 +58,14 @@ def login():
     form = LoginForm()
     if request.method == "POST":
         if form.validate():
-            found_user = User.authenticate(
-                form.username.data, form.password.data)
+            found_user = User.authenticate(form.username.data,
+                                           form.password.data)
             if found_user:
                 login_user(found_user)
-                flash({'text': f"Hello, {found_user.username}!",
-                      'status': 'success'})
+                flash({
+                    'text': f"Hello, {found_user.username}!",
+                    'status': 'success'
+                })
                 return redirect(url_for('root'))
             flash({'text': "Invalid credentials.", 'status': 'danger'})
             return render_template('users/login.html', form=form)
@@ -86,13 +84,12 @@ def logout():
 @login_required
 @ensure_correct_user
 def edit(id):
-    return render_template('users/edit.html',
-                           form=UserForm(),
-                           user=User.query.get(id))
+    return render_template(
+        'users/edit.html', form=UserForm(), user=User.query.get(id))
 
 
-@users_blueprint.route('/<int:follower_id>/follower',
-                       methods=['POST', 'DELETE'])
+@users_blueprint.route(
+    '/<int:follower_id>/follower', methods=['POST', 'DELETE'])
 @login_required
 def follower(follower_id):
     followed = User.query.get(follower_id)
@@ -120,22 +117,23 @@ def followers(id):
 @users_blueprint.route('/<int:id>', methods=["GET", "PATCH", "DELETE"])
 def show(id):
     found_user = User.query.get(id)
-    if (request.method == 'GET' or
-       current_user.is_anonymous or
-       current_user.get_id() != str(id)):
+    if (request.method == 'GET' or current_user.is_anonymous
+            or current_user.get_id() != str(id)):
         return render_template('users/show.html', user=found_user)
     if request.method == b"PATCH":
         form = UserForm(request.form)
         if form.validate():
-            if User.authenticate(found_user.username,
-                                 form.password.data):
+            if User.authenticate(found_user.username, form.password.data):
                 found_user.username = form.username.data
                 found_user.email = form.email.data
                 found_user.image_url = form.image_url.data or None
                 db.session.add(found_user)
                 db.session.commit()
                 return redirect(url_for('users.show', id=id))
-            flash({'text': "Wrong password, please try again.", 'status': 'danger'})
+            flash({
+                'text': "Wrong password, please try again.",
+                'status': 'danger'
+            })
         return render_template('users/edit.html', form=form, user=found_user)
     if request.method == b"DELETE":
         db.session.delete(found_user)

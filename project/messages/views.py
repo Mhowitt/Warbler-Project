@@ -6,10 +6,7 @@ from flask_login import current_user, login_required
 from project import db
 
 messages_blueprint = Blueprint(
-    'messages',
-    __name__,
-    template_folder='templates'
-)
+    'messages', __name__, template_folder='templates')
 
 
 @messages_blueprint.route('/', methods=["POST"])
@@ -18,10 +15,7 @@ def index(id):
     if current_user.get_id() == str(id):
         form = MessageForm()
         if form.validate():
-            new_message = Message(
-                text=form.text.data,
-                user_id=id
-            )
+            new_message = Message(text=form.text.data, user_id=id)
             db.session.add(new_message)
             db.session.commit()
             return redirect(url_for('users.show', id=id))

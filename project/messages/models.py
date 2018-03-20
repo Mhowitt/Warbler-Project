@@ -9,8 +9,8 @@ class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id',
-                                                  ondelete='CASCADE'))
+    user_id = db.Column(db.Integer,
+                        db.ForeignKey('users.id', ondelete='CASCADE'))
 
     def __init__(self, text, user_id, timestamp=datetime.utcnow()):
         self.text = text
