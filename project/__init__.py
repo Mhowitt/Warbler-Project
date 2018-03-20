@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_modus import Modus
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_debugtoolbar import DebugToolbarExtension
 import os
 
 app = Flask(__name__)
@@ -18,6 +19,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or "it's a secret"
+toolbar = DebugToolbarExtension(app)
 
 modus = Modus(app)
 bcrypt = Bcrypt(app)
