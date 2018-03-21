@@ -15,7 +15,7 @@ pip install -r requirements.txt
 # set up database
 dropdb warbler-db
 createdb warbler-db
-python manage.py db upgrade
+flask db upgrade
 
 # The database must be freshly created before doing this command
 # If you have already added data, make sure to follow the steps above
@@ -23,7 +23,7 @@ python manage.py db upgrade
 psql warbler-db < data.sql
 
 # start the server!
-python app.py
+flask run
 ```
 
 ### Assignment
