@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_modus import Modus
 from flask_bcrypt import Bcrypt
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_debugtoolbar import DebugToolbarExtension
 import os
@@ -20,11 +21,13 @@ app.config['SQLALCHEMY_ECHO'] = False
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or "it's a secret"
 toolbar = DebugToolbarExtension(app)
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 modus = Modus(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 db = SQLAlchemy(app)
+Migrate(app, db)
 
 from project.users.views import users_blueprint
 from project.messages.views import messages_blueprint
@@ -45,6 +48,11 @@ def load_user(id):
 def root():
     messages = Message.query.order_by("timestamp asc").limit(100).all()
     return render_template('home.html', messages=messages)
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html')
 
 
 @app.after_request

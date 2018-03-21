@@ -5,6 +5,25 @@
     <h2 class="join-message">Edit Your Profile.</h2>
     <form action="{{ url_for('users.show', id=user.id) }}?_method=PATCH" method="POST" id="user_form">
       {{ form.csrf_token }}
+
+      {% if form.first_name.errors %}
+        {% for error in form.first_name.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.first_name(placeholder="What's your first name?", value=user.first_name, class="form-control") }}
+
+      {% if form.last_name.errors %}
+      {% for error in form.last_name.errors %}
+        <span class="text-danger">
+          {{ error }}
+        </span>
+      {% endfor %}
+    {% endif %}
+    {{ form.last_name(placeholder="What's your last name?", value=user.last_name, class="form-control") }}
+
       {% if form.email.errors %}
         {% for error in form.email.errors %}
           <span class="text-danger">
@@ -13,6 +32,7 @@
         {% endfor %}
       {% endif %}
       {{ form.email(placeholder="What's your email?", value=user.email, class="form-control") }}
+
       {% if form.username.errors %}
         {% for error in form.username.errors %}
           <span class="text-danger">
@@ -21,6 +41,26 @@
         {% endfor %}
       {% endif %}
       {{ form.username(placeholder="What do you want your username to be?", value=user.username, class="form-control") }}
+
+      {% if form.location.errors %}
+        {% for error in form.location.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.location(placeholder="Where do you live?", value=user.location, class="form-control") }}
+
+      {% if form.bio.errors %}
+        {% for error in form.bio.errors %}
+          <span class="text-danger">
+            {{ error }}
+          </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.bio(placeholder="Tell Warbler about yourself", value=user.bio, class="form-control") }}
+      <small id="bioHelp" class="form-text text-muted">Max 100 characters</small>
+
         {% if form.image_url.errors %}
           {% for error in form.image_url.errors %}
           <span class="text-danger">
@@ -30,6 +70,17 @@
       {% endif %}
       {{ form.image_url(placeholder="Optional: What image do you want to use?", value=user.image_url,
       class="form-control") }}
+
+      {% if form.header_image_url.errors %}
+        {% for error in form.header_image_url.errors %}
+        <span class="text-danger">
+          {{ error }}
+        </span>
+        {% endfor %}
+      {% endif %}
+      {{ form.header_image_url(placeholder="Optional: Add a custom header image to your profile!", value=user.header_image_url,
+      class="form-control") }}
+
       <p>To confirm changes, enter your password:</p>
       {% if form.password.errors %}
         {% for error in form.password.errors %}

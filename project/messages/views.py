@@ -31,7 +31,7 @@ def new(id):
 
 @messages_blueprint.route('/<int:message_id>', methods=["GET", "DELETE"])
 def show(id, message_id):
-    found_message = Message.query.get(message_id)
+    found_message = Message.query.get_or_404(message_id)
     if request.method == b"DELETE" and current_user.id == id:
         db.session.delete(found_message)
         db.session.commit()
