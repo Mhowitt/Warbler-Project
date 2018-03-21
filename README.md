@@ -32,6 +32,7 @@ Try to understand the code. Look through and see what each route is doing. Take 
 
 When you're ready, address the following user stories:
 
+1.  As a user, I want to see a custom 404 page when I try to go to an invalid URL.
 1.  As a user, I want to see my name, location, bio, and my header image on my profile page.
 1.  As a user, I want to be able to edit my name, location, bio, and my header image on my profile edit page.
 1.  As a user, I want to see the last 100 warbles **only from the users that I am following, and myself** rather than warbles from _all_ users.
@@ -62,7 +63,7 @@ Fair warning: you won't have time to tackle all of these. Pick one or two that i
 
 ### Appendix: Testing
 
-There is at LEAST one bug in the application, but it's not necessarily obvious where it is (there's a hint at the bottom of the readme). This is why testing is so important!
+There are at LEAST two bugs in the application, but it's not necessarily obvious where it is (there's a hint at the bottom of the readme). This is why testing is so important!
 
 Let's briefly discuss a couple of things related to tests: _how_ you should test, and _what_ you should test. First, let's talk about the how. Your test files should all live inside of a folder called `tests`, and that folder should live inside of your `project` directory. Inside of `tests`, you can organize your files however you see fit. For instance, here's what the file structure might look like with four different test files:
 
@@ -94,7 +95,7 @@ Here are a few different resources for testing your Flask applications.
 * [Sample Tests for Departments in a many-to-many](https://github.com/rithmschool/python_curriculum/blob/master/Unit-02/examples/many_to_many/project/tests/test_departments.py)
 * [Testing - Logging In and Out](http://flask.pocoo.org/docs/0.12/testing/#logging-in-and-out)
 
-(If you're still looking for that 🐛, scroll down for a hint.)
+(If you're still looking for those 🐛🐛, scroll down for soome hints.)
 
 &nbsp;
 
@@ -192,4 +193,6 @@ Here are a few different resources for testing your Flask applications.
 
 &nbsp;
 
-The first step in producing the bug is searching for yourself while you're logged in.
+For one bug, the first step in producing it is searching for yourself while you're logged in.
+
+For another bug, what happens when you go to `/users/login` when you're already logged in?
