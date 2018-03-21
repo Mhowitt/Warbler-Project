@@ -7,7 +7,7 @@ def prevent_login_signup(fn):
     def wrapped(*args, **kwargs):
         if session.get('user_id'):
             flash('You are already logged in!')
-            return redirect(url_for('users.index'))
+            return redirect(url_for('root'))
         return fn(*args, **kwargs)
 
     return wrapped

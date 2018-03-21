@@ -33,6 +33,7 @@ def index():
 
 
 @users_blueprint.route('/signup', methods=["GET", "POST"])
+@prevent_login_signup
 def signup():
     form = UserForm()
     if request.method == "POST":
@@ -55,6 +56,7 @@ def signup():
 
 
 @users_blueprint.route('/login', methods=["GET", "POST"])
+@prevent_login_signup
 def login():
     form = LoginForm()
     if request.method == "POST":
