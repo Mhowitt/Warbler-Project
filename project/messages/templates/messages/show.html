@@ -1,5 +1,4 @@
 {% extends 'base.html' %} 
-<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 {% block content %}
 <div class="bg"></div>
 <div class="row justify-content-center">
@@ -36,12 +35,9 @@
           {# <!-- {% if current_user.has_liked(message.id) %} --> #}
 
          {# <!-- {% else %}
-          <a href="#" id="{{message.id}}" class="unliked">
-            <i class="fab fa-earlybirds"></i>
-          </a>
           {% endif %}  --> #}
           <a href="#" id="{{message.id}}" class="liked">
-            <span style="font-size: 20px;"> Like</span>
+            <span style="font-size: 20px;"><i class="far fa-heart"></i></span>
           </a>
         </div>
       </li>

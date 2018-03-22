@@ -58,7 +58,7 @@ class User(db.Model, UserMixin):
         return bool(self.following.filter_by(id=user.id).first())
 
     def has_liked(self, message_id):
-        return bool(self.likes_messages.filter_by(message_id).first())
+        return bool(self.likes_messages.filter_by(id=message_id).first())
 
     @classmethod
     def authenticate(cls, username, password):

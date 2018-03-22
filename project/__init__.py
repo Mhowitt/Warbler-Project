@@ -46,9 +46,6 @@ def load_user(id):
 
 @app.route('/')
 def root():
-    # messages = FollowersFollowee.followee_id.user.messages.Message.query.order_by(
-    #     "timestamp asc").limit(100).all()
-
     followees = User.query.get(current_user.id).following.all()
     followee_ids = [f.id for f in followees]
 
