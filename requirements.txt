@@ -11,10 +11,10 @@ Flask==0.12
 Flask-Bcrypt==0.7.1
 Flask-DebugToolbar==0.10.1
 Flask-Login==0.4.0
-Flask-Migrate==2.0.3
+Flask-Migrate==2.1.1
 Flask-Modus==0.0.1
-Flask-Script==2.0.5
 Flask-SQLAlchemy==2.1
+Flask-Testing==0.7.1
 Flask-WTF==0.14.2
 green==2.11.2
 gunicorn==19.7.1

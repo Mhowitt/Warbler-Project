@@ -135,8 +135,8 @@ def show(id):
                 found_user.last_name = form.last_name.data
                 found_user.location = form.location.data
                 found_user.bio = form.bio.data
-                found_user.image_url = form.image_url.data or None
-                found_user.header_image_url = form.header_image_url.data or None
+                found_user.image_url = form.image_url.data
+                found_user.header_image_url = form.header_image_url.data
                 db.session.add(found_user)
                 db.session.commit()
                 return redirect(url_for('users.show', id=id))

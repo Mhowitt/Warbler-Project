@@ -68,9 +68,10 @@
 </div>
 <div class="row">
   <div class="col-sm-3">
-    <h4 id="sidebar-username">@{{ user.username }}</h4>
-    <p><a href="">{{ user.location }}</a></p>
-    <p>{{ user.bio }}</p>
+    <h4 id="sidebar-username">{{ user.first_name }} {{ user.last_name }}</h4>
+    <h6>@{{ user.username }}</h6>
+    <h6><a href="">{{ user.location }}</a></h6>
+    <h6>{{ user.bio }}</h6>
   </div>
   {% block user_details %}
   {% endblock %}

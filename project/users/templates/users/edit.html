@@ -59,7 +59,7 @@
         {% endfor %}
       {% endif %}
       {{ form.bio(placeholder="Tell Warbler about yourself", value=user.bio, class="form-control") }}
-      <small id="bioHelp" class="form-text text-muted">Max 100 characters</small>
+      <small id="bioHelp" class="form-text text-muted ">Max 100 characters</small>
 
         {% if form.image_url.errors %}
           {% for error in form.image_url.errors %}
