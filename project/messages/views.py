@@ -47,7 +47,7 @@ def show(id, message_id):
 @login_required
 def liking(id, message_id):
     message = Message.query.get_or_404(message_id)
-    user = User.query.get(current_user.id)
+    user = User.query.get_or_404(current_user.id)
     if request.method == 'POST':
         user.likes_messages.append(message)
     else:
