@@ -1,5 +1,6 @@
 from project import db, bcrypt
 from flask_login import UserMixin
+from project.messages.models import Like
 
 FollowersFollowee = db.Table(
     'follows', db.Column('id', db.Integer, primary_key=True),
@@ -32,6 +33,10 @@ class User(db.Model, UserMixin):
         secondaryjoin=(FollowersFollowee.c.followee_id == id),
         backref=db.backref('following', lazy='dynamic'),
         lazy='dynamic')
+    likes_messages = db.relationship(
+        "Message",
+        secondary=Like,
+        backref=db.backref('likes_users', lazy='dynamic'))
 
     def __init__(self,
                  email,
@@ -51,6 +56,9 @@ class User(db.Model, UserMixin):
 
     def is_following(self, user):
         return bool(self.following.filter_by(id=user.id).first())
+
+    def has_liked(self, message_id):
+        return bool(self.likes_messages.filter_by(message_id).first())
 
     @classmethod
     def authenticate(cls, username, password):

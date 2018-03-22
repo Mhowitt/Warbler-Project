@@ -1,6 +1,12 @@
 from project import db
 from datetime import datetime
 
+Like = db.Table('likes', db.Column('id', db.Integer, primary_key=True),
+                db.Column('user_id', db.Integer,
+                          db.ForeignKey('users.id', ondelete="cascade")),
+                db.Column('message_id', db.Integer,
+                          db.ForeignKey('messages.id', ondelete="cascade")))
+
 
 class Message(db.Model):
 

@@ -1,5 +1,6 @@
-from flask import redirect, render_template, request, url_for, Blueprint
+from flask import redirect, render_template, request, url_for, Blueprint, jsonify
 from project.messages.models import Message
+from project.users.models import User
 from project.users.views import ensure_correct_user
 from project.messages.forms import MessageForm
 from flask_login import current_user, login_required
@@ -37,3 +38,16 @@ def show(id, message_id):
         db.session.commit()
         return redirect(url_for('users.show', id=id))
     return render_template('messages/show.html', message=found_message)
+
+
+@messages_blueprint.route('/<int:message_id>/like', methods=['POST', 'DELETE'])
+@login_required
+def liking(message_id):
+    message = User.message.get_or_404(message_id)
+    if request.method == 'POST':
+        current_user.likes_messages.append(message)
+    else:
+        current_user.likes_messages.remove(message)
+    db.session.add(current_user)
+    db.session.commit()
+    return jsonify({'message': 'Like or Delike Completed'})
