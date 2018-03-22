@@ -144,7 +144,11 @@ def show(id):
                 'text': "Wrong password, please try again.",
                 'status': 'danger'
             })
-        return render_template('users/edit.html', form=form, user=found_user)
+        return render_template(
+            'users/edit.html',
+            form=form,
+            user=found_user,
+            current_user=current_user)
     if request.method == b"DELETE":
         db.session.delete(found_user)
         db.session.commit()

@@ -479,3 +479,8 @@ nav + .container {
   letter-spacing: 0.01em;
   margin-bottom: 10px;
 }
+
+.like-btn {
+  color: firebrick;
+  cursor: pointer;
+}

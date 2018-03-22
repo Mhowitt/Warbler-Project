@@ -34,13 +34,20 @@ def new(id):
 @login_required
 def show(id, message_id):
     found_message = Message.query.get_or_404(message_id)
-    user = User.query.get_or_404(current_user.id)
     if request.method == b"DELETE" and current_user.id == id:
         db.session.delete(found_message)
         db.session.commit()
         return redirect(url_for('users.show', id=id))
     return render_template(
-        'messages/show.html', message=found_message, user=user)
+        'messages/show.html', message=found_message, current_user=current_user)
+
+
+@messages_blueprint.route('/like', methods=['GET'])
+@login_required
+def show_likes(id):
+    user = User.query.get_or_404(id)
+    messages = user.likes_messages.order_by("timestamp desc").all()
+    return render_template('messages/likes.html', messages=messages, user=user)
 
 
 @messages_blueprint.route('/<int:message_id>/like', methods=['POST', 'DELETE'])

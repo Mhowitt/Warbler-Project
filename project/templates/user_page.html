@@ -35,10 +35,16 @@
               <a href="{{ url_for('users.followers', id=user.id) }}">{{ user.followers.count() }}</a>
             </h4>
           </li>
+
+
           <li class="stat">
             <p class="small">Likes</p>
-            <h4>TBD</h4>
+            <h4>
+              <a href="{{ url_for('messages.show_likes', id=user.id) }}">{{ user.likes_messages.count() }}</a>
+            </h4>
           </li>
+
+
           <div class="ml-auto">
             {% if current_user.id == user.id %}
             <a href="{{ url_for('users.edit', id=user.id) }}" class="btn btn-outline-secondary">Edit Profile</a>

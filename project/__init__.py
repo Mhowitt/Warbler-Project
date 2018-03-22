@@ -50,9 +50,7 @@ def load_user(id):
 def root():
     if current_user.is_anonymous:
         messages = Message.query.order_by("timestamp desc").limit(100).all()
-        user = None
     else:
-        user = User.query.get(current_user.id)
         followees = User.query.get(current_user.id).following.all()
         followee_ids = [f.id for f in followees]
 
@@ -60,7 +58,8 @@ def root():
             Message.user_id == current_user.id)).order_by(
                 "timestamp desc").limit(100).all()
 
-    return render_template('home.html', messages=messages, user=user)
+    return render_template(
+        'home.html', messages=messages, current_user=current_user)
 
 
 @app.errorhandler(404)

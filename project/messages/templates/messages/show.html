@@ -31,8 +31,8 @@
           <span class="text-muted">{{ message.timestamp.strftime('%d %B %Y') }}</span>
 
 
-          {% if user.has_liked(message.id) %}
-          <span class="liked like-btn" id="{{message.id}}-{{message.user.id}}">
+          {% if current_user.has_liked(message.id) %}
+          <span class="liked like-btn" id="{{message.id}}-{{message.user.id}}" style="color:firebrick;">
               <i class="fas fa-hand-spock"></i>
           </span>
           {% else %}
