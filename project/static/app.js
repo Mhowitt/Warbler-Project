@@ -20,10 +20,11 @@ $(function() {
     return $.ajax({
       method: "DELETE",
       url: `/users/${userId}/messages/${messageId}/like`
-    }).then(() => {
-      console.log(messageId);
-      console.log(userId);
-      $closestLink.html('<i class="far fa-hand-spock"></i>');
+    }).then(function(r) {
+      console.log(r);
+      $closestLink.html(
+        `<i class="far fa-hand-spock"></i>&nbsp;<span>${r.like_count}</span>`
+      );
     });
   }
 
@@ -34,10 +35,11 @@ $(function() {
     return $.ajax({
       method: "POST",
       url: `/users/${userId}/messages/${messageId}/like`
-    }).then(() => {
-      console.log(messageId);
-      console.log(userId);
-      $closestLink.html('<i class="fas fa-hand-spock"></i>');
+    }).then(function(r) {
+      console.log(r);
+      $closestLink.html(
+        `<i class="fas fa-hand-spock"></i>&nbsp;<span>${r.like_count}</span>`
+      );
     });
   }
 });

@@ -13,13 +13,11 @@
         <span class="text-muted">{{ message.timestamp.strftime('%d %B %Y') }}</span>
         <p class="mb-0 pb-0">{{ message.text }}</p>
         {% if current_user.has_liked(message.id) %}
-          <a href="#"><span class="liked like-btn" id="{{message.id}}-{{message.user.id}}" style="color:firebrick;">
-              <i class="fas fa-hand-spock"></i>
-          </span></a>
+          <a href="#" style="text-decoration:none;"><span class="liked like-btn" id="{{message.id}}-{{message.user.id}}" style="color:firebrick;">
+              <i class="fas fa-hand-spock"></i>&nbsp;<span>{{message.likes_users.count()}}</span></span></a>
           {% else %}
-          <a href="#"><span class="disliked like-btn" id="{{message.id}}-{{message.user.id}}">
-              <i class="far fa-hand-spock"></i>
-          </span></a>
+          <a href="#" style="text-decoration:none;"><span class="disliked like-btn" id="{{message.id}}-{{message.user.id}}">
+              <i class="far fa-hand-spock"></i>&nbsp;<span>{{message.likes_users.count()}}</span></span></a>
           {% endif %}
       </div>
     </li>

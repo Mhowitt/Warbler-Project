@@ -61,4 +61,6 @@ def liking(id, message_id):
         user.likes_messages.remove(message)
     db.session.add(current_user)
     db.session.commit()
-    return jsonify({'message': 'Like or Delike Completed'}, 200)
+    count = message.likes_users.count()
+    message_dict = {'like_count': count}
+    return jsonify(message_dict)

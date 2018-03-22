@@ -33,11 +33,11 @@
 
           {% if current_user.has_liked(message.id) %}
           <span class="liked like-btn" id="{{message.id}}-{{message.user.id}}" style="color:firebrick;">
-              <i class="fas fa-hand-spock"></i>
+              <i class="fas fa-hand-spock"></i>&nbsp;<span>{{message.likes_users.count()}}</span>
           </span>
           {% else %}
           <span class="disliked like-btn" id="{{message.id}}-{{message.user.id}}">
-              <i class="far fa-hand-spock"></i>
+              <i class="far fa-hand-spock"></i>&nbsp;<span>{{message.likes_users.count()}}</span>
           </span>
           {% endif %}
         </div>

@@ -17,11 +17,11 @@
                   <p>@{{ user.username }}</p>
                 </a>
                 {% if current_user.is_authenticated %}
-                  {% if current_user.is_following(user) %}
+                  {% if current_user.is_following(user) and user.id != current_user.id%}
                   <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}?_method=DELETE">
                     <input type="submit" value="Unfollow" class="btn btn-primary btn-sm">
                   </form>
-                  {% else %}
+                  {% elif  user.id != current_user.id %}
                   <form method="POST" action="{{url_for('users.follower', follower_id=user.id)}}">
                     <input type="submit" value="Follow" class="btn btn-outline-primary btn-sm">
                   </form>
