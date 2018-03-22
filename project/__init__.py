@@ -38,6 +38,8 @@ app.register_blueprint(users_blueprint, url_prefix='/users')
 app.register_blueprint(
     messages_blueprint, url_prefix='/users/<int:id>/messages')
 
+login_manager.login_view = "users.login"
+
 
 @login_manager.user_loader
 def load_user(id):
@@ -46,14 +48,19 @@ def load_user(id):
 
 @app.route('/')
 def root():
-    followees = User.query.get(current_user.id).following.all()
-    followee_ids = [f.id for f in followees]
+    if current_user.is_anonymous:
+        messages = Message.query.order_by("timestamp desc").limit(100).all()
+        user = None
+    else:
+        user = User.query.get(current_user.id)
+        followees = User.query.get(current_user.id).following.all()
+        followee_ids = [f.id for f in followees]
 
-    messages = Message.query.filter((Message.user_id.in_(followee_ids)) | (
-        Message.user_id == current_user.id)).order_by("timestamp desc").limit(
-            100).all()
+        messages = Message.query.filter((Message.user_id.in_(followee_ids)) | (
+            Message.user_id == current_user.id)).order_by(
+                "timestamp desc").limit(100).all()
 
-    return render_template('home.html', messages=messages)
+    return render_template('home.html', messages=messages, user=user)
 
 
 @app.errorhandler(404)

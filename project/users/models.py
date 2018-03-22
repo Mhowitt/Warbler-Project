@@ -36,7 +36,8 @@ class User(db.Model, UserMixin):
     likes_messages = db.relationship(
         "Message",
         secondary=Like,
-        backref=db.backref('likes_users', lazy='dynamic'))
+        backref=db.backref('likes_users', lazy='dynamic'),
+        lazy='dynamic')
 
     def __init__(self,
                  email,

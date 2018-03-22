@@ -31,23 +31,27 @@ def new(id):
 
 
 @messages_blueprint.route('/<int:message_id>', methods=["GET", "DELETE"])
+@login_required
 def show(id, message_id):
     found_message = Message.query.get_or_404(message_id)
+    user = User.query.get_or_404(current_user.id)
     if request.method == b"DELETE" and current_user.id == id:
         db.session.delete(found_message)
         db.session.commit()
         return redirect(url_for('users.show', id=id))
-    return render_template('messages/show.html', message=found_message)
+    return render_template(
+        'messages/show.html', message=found_message, user=user)
 
 
 @messages_blueprint.route('/<int:message_id>/like', methods=['POST', 'DELETE'])
 @login_required
-def liking(message_id):
-    message = User.message.get_or_404(message_id)
+def liking(id, message_id):
+    message = Message.query.get_or_404(message_id)
+    user = User.query.get(current_user.id)
     if request.method == 'POST':
-        current_user.likes_messages.append(message)
+        user.likes_messages.append(message)
     else:
-        current_user.likes_messages.remove(message)
+        user.likes_messages.remove(message)
     db.session.add(current_user)
     db.session.commit()
-    return jsonify({'message': 'Like or Delike Completed'})
+    return jsonify({'message': 'Like or Delike Completed'}, 200)
