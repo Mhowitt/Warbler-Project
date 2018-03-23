@@ -49,7 +49,8 @@ def load_user(id):
 @app.route('/')
 def root():
     if current_user.is_anonymous:
-        messages = Message.query.order_by("timestamp desc").limit(100).all()
+        return render_template('home.html', current_user=current_user)
+
     else:
         followees = User.query.get(current_user.id).following.all()
         followee_ids = [f.id for f in followees]

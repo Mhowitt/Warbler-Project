@@ -8,7 +8,7 @@ import unittest
 class BaseTestCase(TestCase):
     def create_app(self):
         app.config['WTF_CSRF_ENABLED'] = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///testing.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
         return app
 
     def setUp(self):
@@ -32,9 +32,8 @@ class BaseTestCase(TestCase):
             password="passwords2",
         )
 
-        # user1.following.append(user2)
-        user2.following.append(user1)
         db.session.add_all([user1, user2])
+        user2.following.append(user1)
         db.session.commit()
 
         self.message1 = message1 = Message(text="Our first message", user_id=1)
@@ -42,7 +41,6 @@ class BaseTestCase(TestCase):
             text="Our second message", user_id=2)
 
         user1.likes_messages.append(message1)
-        # user1.likes_messages.append(message2)
         db.session.add_all([message1, message2])
         db.session.commit()
 

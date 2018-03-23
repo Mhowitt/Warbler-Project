@@ -152,4 +152,5 @@ def show(id):
     if request.method == b"DELETE":
         db.session.delete(found_user)
         db.session.commit()
+        logout_user()
         return redirect(url_for('users.signup'))
