@@ -45,9 +45,7 @@ class BaseTestCase(TestCase):
         db.session.commit()
 
     def tearDown(self):
-        # print("TEARING DOWN")
         db.drop_all()
-        # print("TEARING DOWN2")
 
     def login(self, username, password):
         return self.client.post(
@@ -59,7 +57,6 @@ class BaseTestCase(TestCase):
         return self.client.get('/users/logout', follow_redirects=True)
 
     def test_create_message(self):
-        # print("TCM")
         self.login('mirhow', 'passwords')
         response = self.client.post(
             '/users/1/messages/',
@@ -79,16 +76,38 @@ class BaseTestCase(TestCase):
         response = self.client.get('/users/2/messages/new')
         self.assertNotIn(b'Add my message!', response.data)
 
-    def test_root_anonymous(self):
-        # print("TRA")
-        response = self.client.get('/')
-        self.assertEquals(response.status_code, 200)
-        self.assertIn(b'New to Warbler?', response.data)
+    def test_message_show(self):
+        self.login('mirhow', 'passwords')
+        response = self.client.get('/users/2/messages/1')
 
-    def test_root_authenticated(self):
-        response = self.login('mirhow', 'passwords')
-        self.assertEquals(response.status_code, 200)
-        self.assertIn(b'@mirhow', response.data)
+        self.assertIn(b'Our first message', response.data)
+
+    def test_message_delete(self):
+        self.login('PG', 'passwords2')
+        response = self.client.post(
+            'users/2/messages/1?_method=DELETE', follow_redirects=True)
+        self.assertNotIn(b'Our first message', response.data)
+
+    def test_message_delete_unauth(self):
+        self.login('mirhow', 'passwords')
+        self.client.post(
+            'users/2/messages/1?_method=DELETE', follow_redirects=True)
+        response = self.client.get('users/2/messages/1')
+        self.assertIn(b'Our first message', response.data)
+
+    def test_likes(self):
+        self.login('mirhow', 'passwords')
+        response = self.client.get('users/1/messages/like')
+        self.assertIn(b'PG', response.data)
+        self.assertIn(b'Our first message', response.data)
+
+    def test_liking(self):
+        self.login('mirhow', 'passwords')
+        self.client.post('/users/1/messages/1/like?_method=DELETE')
+        self.client.post('/users/1/messages/2/like')
+
+        self.assertEqual(self.user1.likes_messages.first().text,
+                         "Our second message")
 
 
 if __name__ == '__main__':
