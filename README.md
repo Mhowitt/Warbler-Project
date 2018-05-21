@@ -44,11 +44,11 @@ We've addressed the following user stories:
 1.  As a user, I want to see the last 100 warbles **only from the users that I am following, and myself** rather than warbles from _all_ users.
 1.  As a user, I want to be able to "like" a warble.
 1.  As a user, I want to be able to see how many warbles I "liked" on my profile page.
+1.  As a user, I should not have to refresh the page when I like a warble.
 1.  (_Technical_) - Add tests.
 
 ### Bonus
 
-1.  As a user, I should not have to refresh the page when I like a warble.
 1.  As a user, I should not have to refresh the page when I change my bio or name in my profile.
 1.  As a user, I should not have to go to a new page to compose a warble (think modals and AJAX here!)
 1.  (_Technical_) - Look for opportunities to refactor! In the templates especially, there are opportunities to DRY up the code.
