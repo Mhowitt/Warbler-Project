@@ -4,7 +4,7 @@
 
 A Twitter clone with a spin coded by [Paula Goyanes](https://github.com/goyanespaula) & [Miranda Howitt](https://github.com/Mhowitt)
 
-[Live site](http://warbler-app.herokuapp.com/)
+[Live site](https://warbler-project.herokuapp.com/)
 
 ### Installation
 
