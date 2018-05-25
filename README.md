@@ -34,32 +34,15 @@ flask run
 
 To run tests, `pip install green` then run `green` from the root of your project.
 
-### Requirements
+### Features
 
-We've addressed the following user stories:
+The features below are listed as Agile/Scrum requirements that you might see on a software engineering kanban board or task list. The tasks are phrased as "User Stories", which means they are written from the perspective of a user/customer.
 
-1.  As a user, I want to see a custom 404 page when I try to go to an invalid URL.
-1.  As a user, I want to see my name, location, bio, and my header image on my profile page.
-1.  As a user, I want to be able to edit my name, location, bio, and my header image on my profile edit page.
-1.  As a user, I want to see the last 100 warbles **only from the users that I am following, and myself** rather than warbles from _all_ users.
-1.  As a user, I want to be able to "like" a warble.
-1.  As a user, I want to be able to see how many warbles I "liked" on my profile page.
-1.  (_Technical_) - Add tests.
-
-### Bonus
-
-1.  As a user, I should not have to refresh the page when I like a warble.
-1.  As a user, I should not have to refresh the page when I change my bio or name in my profile.
-1.  As a user, I should not have to go to a new page to compose a warble (think modals and AJAX here!)
-1.  (_Technical_) - Look for opportunities to refactor! In the templates especially, there are opportunities to DRY up the code.
-
-### Super Bonus
-
-1.  As a user, I should be able to send a direct message to another user which is only visible to the two of us.
-1.  As a user, I should be able to respond to a direct message sent to me.
-1.  As a user, I should be able to block another user, so that they are no longer visible to me and they cannot send me direct messages.
-1.  As a user, I should be able to see a list of all of the users I've blocked.
-1.  As a user, I should be able to unblock a user I've previously blocked.
-1.  As an admin user, I should be able to delete anyone's messages.
-1.  As an admin user, I should be able to delete users from the platform.
-1.  As an admin user, I should be able to add or revoke admin privileges for any other user.
+* As a user, I want to see a custom 404 page when I try to go to an invalid URL.
+* As a user, I want to see my name, location, bio, and my header image on my profile page.
+* As a user, I want to be able to edit my name, location, bio, and my header image on my profile edit page.
+* As a user, I want to see the last 0* warbles **only from the users that I am following, and myself** rather than warbles from *all\* users.
+* As a user, I should not have to refresh the page when I like a warble.
+* As a user, I want to be able to "like" a warble.
+  _ As a user, I want to be able to see how many warbles I "liked" on my profile page.
+  _ (_Technical_) - Add tests.
