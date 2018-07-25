@@ -72,7 +72,7 @@
     <h4 id="sidebar-username">{{ user.first_name }} {{ user.last_name }}</h4>
     {% endif %}
     <h6>@{{ user.username }}</h6>
-    <h6><a href="">{{ user.location }}</a></h6>
+    <h6>{{ user.location }}</h6>
     <h6>{{ user.bio }}</h6>
   </div>
   {% block user_details %}
