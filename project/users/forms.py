@@ -4,15 +4,15 @@ from wtforms.validators import DataRequired, Email, Length
 
 
 class UserForm(FlaskForm):
-    first_name = StringField('first_name')
-    last_name = StringField('last_name')
-    email = StringField('email', validators=[DataRequired(), Email()])
-    username = StringField('username', validators=[DataRequired()])
-    location = StringField('last_name')
+    first_name = StringField('First Name')
+    last_name = StringField('Last Name')
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    username = StringField('Username', validators=[DataRequired()])
+    location = StringField('Location')
     bio = StringField(
-        'bio', validators=[Length(max=100)], widget=widgets.TextArea())
-    image_url = StringField('image_url')
-    header_image_url = StringField('header_image_url')
+        'Bio', validators=[Length(max=100)], widget=widgets.TextArea())
+    image_url = StringField('Profile Picture')
+    header_image_url = StringField('Header Image')
     password = PasswordField('password', validators=[Length(min=6)])
 
 

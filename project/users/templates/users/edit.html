@@ -13,6 +13,7 @@
           </span>
         {% endfor %}
       {% endif %}
+      {{ form.first_name.label }}
       {{ form.first_name(placeholder="What's your first name?", value=user.first_name, class="form-control") }}
 
       {% if form.last_name.errors %}
@@ -22,6 +23,7 @@
         </span>
       {% endfor %}
     {% endif %}
+    {{ form.last_name.label }}
     {{ form.last_name(placeholder="What's your last name?", value=user.last_name, class="form-control") }}
 
       {% if form.email.errors %}
@@ -31,6 +33,7 @@
           </span>
         {% endfor %}
       {% endif %}
+      {{ form.email.label }}
       {{ form.email(placeholder="What's your email?", value=user.email, class="form-control") }}
 
       {% if form.username.errors %}
@@ -40,6 +43,7 @@
           </span>
         {% endfor %}
       {% endif %}
+      {{ form.username.label }}
       {{ form.username(placeholder="What do you want your username to be?", value=user.username, class="form-control") }}
 
       {% if form.location.errors %}
@@ -49,6 +53,7 @@
           </span>
         {% endfor %}
       {% endif %}
+      {{ form.location.label }}
       {{ form.location(placeholder="Where do you live?", value=user.location, class="form-control") }}
 
       {% if form.bio.errors %}
@@ -58,6 +63,7 @@
           </span>
         {% endfor %}
       {% endif %}
+      {{ form.bio.label }}
       {{ form.bio(placeholder="Tell Warbler about yourself", value=user.bio, class="form-control") }}
       <small id="bioHelp" class="form-text text-muted ">Max 100 characters</small>
 
@@ -68,6 +74,7 @@
           </span>
         {% endfor %}
       {% endif %}
+      {{ form.image_url.label }}
       {{ form.image_url(placeholder="Optional: What image do you want to use?", value=user.image_url,
       class="form-control") }}
 
@@ -78,6 +85,7 @@
         </span>
         {% endfor %}
       {% endif %}
+      {{ form.header_image_url.label }}
       {{ form.header_image_url(placeholder="Optional: Add a custom header image to your profile!", value=user.header_image_url,
       class="form-control") }}
 

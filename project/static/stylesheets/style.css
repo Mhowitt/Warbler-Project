@@ -52,7 +52,9 @@ body {
 
 .nav > li > a > img {
   width: 32px;
-  border-radius: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 ul.nav.navbar-nav {
@@ -147,6 +149,7 @@ nav + .container {
 
 .join-message {
   margin-top: 100px;
+  margin-bottom: 20px;
 }
 
 #profile-image,
@@ -168,6 +171,7 @@ nav + .container {
   margin-top: -120px;
   z-index: 1;
   position: relative;
+  object-fit: cover;
   box-shadow: 0 1px 1px rgba(136, 153, 166, 0.15);
 }
 
@@ -176,6 +180,7 @@ nav + .container {
   height: 48px;
   width: 48px;
   margin-top: 2px;
+  object-fit: cover;
 }
 
 .message-area,
@@ -275,8 +280,11 @@ nav + .container {
   background-color: #e6ecf0;
 }
 
-#sidebar-username {
+#sidebar {
   margin-top: 30px;
+}
+
+#sidebar-username {
   font-size: 21px;
   font-weight: bold;
   line-height: 28px;
@@ -327,6 +335,7 @@ nav + .container {
   height: 70px;
   width: 70px;
   margin-top: -35px;
+  object-fit: cover;
 }
 
 .card-link {
@@ -445,6 +454,10 @@ nav + .container {
 
 .edit-btn-area > .btn {
   width: 48%;
+}
+
+#bioHelp {
+  margin: -1rem 0 0.75rem;
 }
 
 /* Message Show page */
