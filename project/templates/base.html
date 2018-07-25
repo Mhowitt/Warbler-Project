@@ -4,90 +4,82 @@
 <head>
   <meta charset="UTF-8">
   <title>Warbler</title>
-  <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
     crossorigin="anonymous"></script>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
-    integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
     crossorigin="anonymous"></script>
-  <script
-    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
-    integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
     crossorigin="anonymous"></script>
-  <script
-    src="{{ url_for('static', filename='app.js') }}"></script>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/brands.js" integrity="sha384-sCI3dTBIJuqT6AwL++zH7qL8ZdKaHpxU43dDt9SyOzimtQ9eyRhkG3B7KMl6AO19" crossorigin="anonymous"></script>
-  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
-  <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='stylesheets/style.css') }}">
-  <link
-    rel="shortcut icon"
-    href="{{ url_for('static', filename='favicon.ico') }}">
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/brands.js" integrity="sha384-sCI3dTBIJuqT6AwL++zH7qL8ZdKaHpxU43dDt9SyOzimtQ9eyRhkG3B7KMl6AO19"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 </head>
 
 {% if request.endpoint == 'users.signup' or request.endpoint == 'users.login' %}
-  <body class="onboarding">
-{% else %}
+
+<body class="onboarding">
+  {% else %}
+
   <body>
-{% endif %}
-  <nav class="navbar navbar-expand">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <a href="{{ url_for('root') }}" class="navbar-brand">
-          <img src="{{ url_for('static', filename='images/warbler-logo.png') }}" alt="">
-          <span>Warbler</span>
-        </a>
-      </div>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-          <form class="navbar-form navbar-right" action={{ url_for( 'users.index') }} method='GET'>
-            <input type="text" name="q" class="form-control" placeholder="Search Warbler" id="search">
-            <button type="submit" class="btn btn-default">
-              <span class="fas fa-search"></span>
-            </button>
-          </form>
-        </li>
-        {% if current_user.is_anonymous %}
-        <li>
-          <a href="{{ url_for('users.signup') }}">Sign up</a>
-        </li>
-        <li>
-          <a href="{{ url_for('users.login') }}">Log in</a>
-        </li>
-        {% else %}
-        <li>
-          <a href="{{ url_for('users.show', id=current_user.id) }}">
-            <img src="{{ current_user.image_url }}" alt="{{ current_user.username }}">
+    {% endif %}
+    <nav class="navbar navbar-expand">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="{{ url_for('root') }}" class="navbar-brand">
+            <img src="{{ url_for('static', filename='images/warbler-logo.png') }}" alt="">
+            <span>Warbler</span>
           </a>
-        </li>
-        <li>
-          <a href="{{ url_for('messages.new', id=current_user.id) }}">New Message</a>
-        </li>
-        <li>
-          <a href="{{ url_for('users.logout') }}">Log out</a>
-        </li>
-        {% endif %}
-      </ul>
-    </div>
-  </nav>
-  <div class="container">
-    {% for message in get_flashed_messages() %}
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+          {% if current_user.is_authenticated %}
+          <li>
+            <form class="navbar-form navbar-right" action={{ url_for( 'users.index') }} method='GET'>
+              <input type="text" name="q" class="form-control" placeholder="Search Warbler" id="search">
+              <button type="submit" class="btn btn-default">
+                <span class="fas fa-search"></span>
+              </button>
+            </form>
+          </li>
+          {% endif %} {% if current_user.is_anonymous %}
+          <li>
+            <a href="{{ url_for('users.signup') }}">Sign up</a>
+          </li>
+          <li>
+            <a href="{{ url_for('users.login') }}">Log in</a>
+          </li>
+          {% else %}
+          <li>
+            <a href="{{ url_for('users.show', id=current_user.id) }}">
+              <img src="{{ current_user.image_url }}" alt="{{ current_user.username }}">
+            </a>
+          </li>
+          <li>
+            <a href="{{ url_for('messages.new', id=current_user.id) }}">New Message</a>
+          </li>
+          <li>
+            <a href="{{ url_for('users.logout') }}">Log out</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      {% for message in get_flashed_messages() %}
       <div class="alert alert-{{ message['status'] }}">
         {{ message['text'] }}
       </div>
-    {% endfor %}
-    {% block content %}
-    {% endblock %}
-  </div>
-  
-</body>
+      {% endfor %} {% block content %} {% endblock %}
+    </div>
+
+  </body>
+
 </html>
